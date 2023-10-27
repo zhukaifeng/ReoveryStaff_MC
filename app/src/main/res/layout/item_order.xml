@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/white_round10_bg"
+    android:orientation="vertical"
+    android:paddingTop="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/prod_names"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="170dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="书本纸"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="(可回收)"
+            android:textColor="@color/textGrayColor"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="10kg"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="(预估)"
+            android:textColor="@color/textGrayColor"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/order_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="订单编号：201902100001"
+        android:textColor="@color/textGrayColor"
+        android:textSize="10sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/order_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2019-10-21  10:35"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/img_line" />
+
+        <TextView
+            android:id="@+id/appoint_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="2019-10-21  10:35"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/real_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="王小明"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/todiag_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:layout_marginRight="4dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/diag_icon" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18922986746"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:layout_marginRight="4dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_location" />
+
+        <TextView
+            android:id="@+id/address_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="苏州市工业园区斜塘街道松则家园小区5幢505室"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/dash_lione" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/order_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="等待接单"
+            android:textColor="@color/textGrayColor"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/to_cancel_order"
+            android:layout_width="75dp"
+            android:layout_height="32dp"
+            android:background="@drawable/red_50_border"
+            android:gravity="center"
+            android:text="预约取消"
+            android:visibility="gone"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/red" />
+
+        <Button
+            android:id="@+id/to_get_order"
+            android:layout_width="75dp"
+            android:layout_height="32dp"
+            android:background="@drawable/primary_50_border"
+            android:gravity="center"
+            android:text="接单"
+            android:visibility="gone"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/to_dispatch_order"
+            android:layout_width="75dp"
+            android:layout_height="32dp"
+            android:background="@drawable/primary_50_border"
+            android:gravity="center"
+            android:text="派单"
+            android:visibility="gone"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/to_get_goods"
+            android:layout_width="75dp"
+            android:layout_height="32dp"
+            android:background="@drawable/primary_50_bg"
+            android:gravity="center"
+            android:text="确定取货"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/to_check_cancel"
+            android:layout_width="75dp"
+            android:layout_height="32dp"
+            android:background="@drawable/primary_50_bg"
+            android:gravity="center"
+            android:text="去审核"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</LinearLayout>

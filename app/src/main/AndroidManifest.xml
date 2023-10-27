@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.dclee.recovery">
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.NFC" /> <!-- //内置sd卡写入权限 -->
+    <uses-permission
+        android:name="android.permission.MOUNT_FORMAT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 检查网络可用性 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 访问WiFi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取 device id 辨别设备 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 腾讯地图 SDK 要求的权限(结束) -->
+    <!-- 通过GPS得到精确位置 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 通过网络得到粗略位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application
+        android:name=".MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_meicheng"
+        android:label="@string/application_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:label">
+        <activity android:name=".view.home.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.CodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.check.CheckOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.check.CheckActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.nfc.MyNfcActivity">
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.mine.MineActivity"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="TencentMapSDK"
+            android:value="3DHBZ-32DCW-DADRQ-RMHAP-VXUAV-AZFSD" />
+
+        <service
+            android:name=".service.BlueDeviceService"
+            android:enabled="true"
+            android:exported="true" />
+        <service android:name=".service.UpdatePositionService" />
+
+        <activity
+            android:name=".view.device.DeviceActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.MainActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".view.orderlist.OrderListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.orderlist.OrderAdminListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.GetGoodsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.purchase.PurchaseListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.order_summary.OrderSummaryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.orderlist.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.orderlist.OrderAdminDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.create_order.CreateOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.SelectOrderProdActivity"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" /> <!-- <meta-data -->
+        <!-- android:name="TencentMapSDK" -->
+        <!-- android:value="3DHBZ-32DCW-DADRQ-RMHAP-VXUAV-AZFSD" /> -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="6ndPRuRfq88wzEcBzxKlyj9qZklwtETV" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.dclee.recovery.mc.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+
+</manifest>

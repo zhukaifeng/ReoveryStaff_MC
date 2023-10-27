@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CheckstyleConfigurable">
+    <option name="suppFilterFilename" value="" />
+    <option name="suppCommentFilter" value="false" />
+    <option name="offComment" value="CHECKSTYLE\:OFF" />
+    <option name="onComment" value="CHECKSTYLE\:ON" />
+    <option name="checkFormat" value=".*" />
+    <option name="messageFormat" value="" />
+    <option name="checkCPP" value="true" />
+    <option name="checkC" value="true" />
+    <option name="suppNearbyCommentFilter" value="false" />
+    <option name="snCommentFormat" value="SUPPRESS CHECKSTYLE (\w+)" />
+    <option name="snCheckFormat" value="$1" />
+    <option name="snMessageFormat" value="" />
+    <option name="snInfluenceFormat" value="0" />
+    <option name="snCheckCPP" value="true" />
+    <option name="snCheckC" value="true" />
+    <option name="pathToUserRulesConfiguration" value="" />
+    <option name="pathToJarWithRules" value="" />
+  </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.125" />
+        <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_home.xml" value="0.11543394613082514" />
+        <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_login.xml" value="0.11543394613082514" />
+        <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/frag_home.xml" value="0.16666666666666666" />
+        <entry key="app/src/main/res/drawable/bg_blue1.xml" value="0.134" />
+        <entry key="app/src/main/res/drawable/bg_blue2.xml" value="0.134" />
+        <entry key="app/src/main/res/drawable/bg_center_dialog.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_gery.xml" value="0.134" />
+        <entry key="app/src/main/res/drawable/bg_gery2.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_grey.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_grey2.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_grey3.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_grey4.xml" value="0.1445" />
+        <entry key="app/src/main/res/drawable/bg_red.xml" value="0.1445" />
+        <entry key="app/src/main/res/drawable/bg_red2.xml" value="0.1445" />
+        <entry key="app/src/main/res/drawable/bg_shape_app.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_shape_func.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_shape_home_top.xml" value="0.134" />
+        <entry key="app/src/main/res/drawable/bg_white.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/item_selector.xml" value="0.1145" />
+        <entry key="app/src/main/res/layout/activity_check.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_check_detail.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_check_group.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_check_time.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_clean_data.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_company.xml" value="0.11614583333333334" />
+        <entry key="app/src/main/res/layout/activity_dev_connect.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_device.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_down_order.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.14010416666666667" />
+        <entry key="app/src/main/res/layout/activity_onsite_check.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_onsite_upload.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/activity_query.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_reset_pwd.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_server.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1359375" />
+        <entry key="app/src/main/res/layout/activity_upload.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/frag_home.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/frag_me.xml" value="0.11" />
+        <entry key="app/src/main/res/layout/item_check_detail.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/item_check_group.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/item_check_task.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/item_click_list.xml" value="0.146875" />
+        <entry key="app/src/main/res/layout/item_device.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_home_func.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_query.xml" value="0.3047091412742382" />
+        <entry key="app/src/main/res/layout/layout_bv_dialog.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/layout_center_dialog.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/layout_check_dialog.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/layout_click_list.xml" value="0.146875" />
+        <entry key="app/src/main/res/layout/layout_empty.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_home_bottom.xml" value="0.11" />
+        <entry key="app/src/main/res/layout/layout_search.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_wheel.xml" value="0.125" />
+        <entry key="spinnerlib/src/main/res/drawable-v21/ms__selector.xml" value="0.1" />
+        <entry key="spinnerlib/src/main/res/drawable/ms__drawable.xml" value="0.1" />
+        <entry key="spinnerlib/src/main/res/drawable/ms__selector.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="FindBugsConfigurable">
+    <option name="make" value="true" />
+    <option name="effort" value="default" />
+    <option name="priority" value="Medium" />
+    <option name="excludeFilter" value="" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="SuppressionsComponent">
+    <option name="suppComments" value="[]" />
+  </component>
+</project>

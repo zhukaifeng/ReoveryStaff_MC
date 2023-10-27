@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.dclee.recovery.wedget.TitleBar
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:rightText="接单明细"
+        app:rightTextVisibility="true"
+        app:titleText="接单汇总" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="13dp"
+            android:layout_weight="1"
+            android:background="@drawable/round50_border"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="toSelectStartDate"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:id="@+id/start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="2019-10-21"
+                android:textColor="@color/textGrayColor"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/arrow_bottom_gray" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="至"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="13dp"
+            android:layout_weight="1"
+            android:background="@drawable/round50_border"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="toSelectEndDate"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+
+            <TextView
+                android:id="@+id/end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="2019-10-21"
+                android:textColor="@color/textGrayColor"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/arrow_bottom_gray" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:background="@drawable/top_primary_round15_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="品类"
+            android:textColor="@color/white" />
+
+        <!--        <TextView-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:paddingLeft="5dp"-->
+        <!--            android:text="品类"-->
+        <!--            android:textColor="@color/white" />-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="重量(千克)"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="金额(元)"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="均价(元)"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <com.androidkun.PullToRefreshRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

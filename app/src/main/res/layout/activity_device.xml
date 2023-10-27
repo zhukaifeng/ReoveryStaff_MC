@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.dclee.recovery.wedget.TitleBar
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary" />
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/srl_device"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="选择蓝牙地磅"
+                android:textColor="@color/txt_black"
+                android:textSize="18dp" />
+
+            <GridView
+                android:id="@+id/gv_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="18dp"
+                android:background="@color/transparent"
+                android:cacheColorHint="@color/transparent"
+                android:divider="@null"
+                android:fadingEdge="none"
+                android:numColumns="2"
+                android:scrollbars="none" />
+        </LinearLayout>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/skv_device"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fitsSystemWindows="true"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/colorAccent" />
+
+</RelativeLayout>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:src="@mipmap/white_back" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/white_scane_code" />
+
+        <LinearLayout
+            android:layout_width="225dp"
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/white_round50_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/gray_search" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00000000"
+                android:gravity="center_vertical"
+                android:hint="客户姓名"
+                android:imeOptions="actionDone"
+                android:textColor="#333333"
+                android:id="@+id/custom_name"
+                android:textColorHint="@color/textGrayColor"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:text="部门"
+                android:textColor="@color/primary_gray_selector" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/arrow_bottom_gray" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:text="全部类别"
+                android:textColor="@color/primary_gray_selector" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/arrow_bottom_gray" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:text="全部品类"
+                android:textColor="@color/primary_gray_selector" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/arrow_bottom_gray" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="13dp"
+            android:clickable="true"
+            android:onClick="toSelectStartDate"
+            android:layout_weight="1"
+            android:background="@drawable/round50_border"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/start_date"
+                android:text="2019-10-21"
+                android:textColor="@color/textGrayColor"
+                android:textSize="14sp" />
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/arrow_bottom_gray" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="至"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="13dp"
+            android:layout_weight="1"
+            android:background="@drawable/round50_border"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:onClick="toSelectEndDate"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/end_date"
+                android:text="2019-10-21"
+                android:textColor="@color/textGrayColor"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/arrow_bottom_gray" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.androidkun.PullToRefreshRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

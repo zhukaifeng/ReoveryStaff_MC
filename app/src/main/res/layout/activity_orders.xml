@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <com.dclee.recovery.wedget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleText="订单管理" />
+
+    <RadioGroup
+        android:id="@+id/sort_type"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/border_white_bg"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/unreceive_orders"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="待接单"
+            android:textColor="@color/primary_gray_selector" />
+
+        <RadioButton
+            android:id="@+id/ungetgoods_order"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="待取货"
+            android:textColor="@color/primary_gray_selector" />
+
+        <RadioButton
+            android:id="@+id/finish_orders"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="未核验"
+            android:textColor="@color/primary_gray_selector" />
+
+        <RadioButton
+            android:id="@+id/check_orders"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="已核验"
+            android:textColor="@color/primary_gray_selector" />
+    </RadioGroup>
+
+    <com.androidkun.PullToRefreshRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
