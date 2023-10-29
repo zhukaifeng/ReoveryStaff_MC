@@ -32,6 +32,7 @@ import com.dclee.recovery.view.device.DeviceActivity;
 import com.dclee.recovery.view.order_summary.OrderSummaryActivity;
 import com.dclee.recovery.view.orderlist.OrderAdminListActivity;
 import com.dclee.recovery.view.orderlist.OrderListActivity;
+import com.dclee.recovery.view.sorting.SortingReqActivity;
 import com.google.gson.JsonObject;
 import com.longsh.optionframelibrary.OptionMaterialDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -194,7 +195,9 @@ public class HomeFrag extends BaseFragment {
         llOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toOrdersActivity();
+                toClass(mActivity, SortingReqActivity.class);
+                // zkfdebug
+              //  toOrdersActivity();
             }
         });
 
