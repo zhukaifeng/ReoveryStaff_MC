@@ -1,35 +1,30 @@
 package com.dclee.recovery.view.sorting;
 
 import android.content.Intent;
-import android.media.Image;
-import android.view.View;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.androidkun.PullToRefreshRecyclerView;
 import com.dclee.recovery.R;
 import com.dclee.recovery.base.BaseActivity;
+import com.dclee.recovery.base.BaseAdapter;
 import com.dclee.recovery.pojo.OrderBean;
-import com.dclee.recovery.view.orderlist.OrderAdapter;
-import com.dclee.recovery.view.purchase.PurchaseListActivity;
 import com.dclee.recovery.wedget.TitleBar;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SortingReqActivity extends BaseActivity {
+public class SortInListActivity extends BaseActivity {
 
     private PullToRefreshRecyclerView mRecyclerView;
-    private SortingReqAdapter mAdapter;
+    private SortInListAdapter mAdapter;
     private TitleBar titleBar;
-    private ImageView iv_add;
+
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_sorting_req;
+        return R.layout.activity_sortin_list;
     }
 
     @Override
@@ -38,23 +33,15 @@ public class SortingReqActivity extends BaseActivity {
 //            EventBus.getDefault().register(this);
         mRecyclerView = findViewById(R.id.recyclerView);
         titleBar = findViewById(R.id.titleBar);
-        iv_add = findViewById(R.id.iv_add);
 
-        mAdapter = new SortingReqAdapter(this);
+        mAdapter = new SortInListAdapter(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
 
-        titleBar.setOnRightClickListener(new TitleBar.OnRightClickListener() {
+        mAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
-            public void onRightClick() {
-                startActivity(new Intent(getActivity(), AddSortingReqActivity.class));
-            }
-        });
-        iv_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddSortingReqActivity.class));
-
+            public void onItemClick(int position) {
+                startActivity(new Intent(SortInListActivity.this, SortInDetailActivity.class));
             }
         });
     }
@@ -64,6 +51,10 @@ public class SortingReqActivity extends BaseActivity {
         List<OrderBean> result = new ArrayList<>();
         result.add(new OrderBean());
         result.add(new OrderBean());
+        result.add(new OrderBean());
+        result.add(new OrderBean());
+        result.add(new OrderBean());
+        result.add(new OrderBean());
         mAdapter.setDatas(result);
 
     }
@@ -71,6 +62,6 @@ public class SortingReqActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-     //   EventBus.getDefault().unregister(this);
+        //   EventBus.getDefault().unregister(this);
     }
 }

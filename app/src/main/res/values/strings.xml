@@ -1,5 +1,5 @@
 <resources>
-    <string name="application_name">禹洲美城</string>
+    <string name="application_name">嘉达通蓝牙版</string>
     <string name="base_url">https://yzmckj.cn/api/</string>
     <string name="res_url">https://yzmckj.cn/uploads/</string>
     <string name="title_activity_mine">MineActivity</string>
@@ -15,4 +15,6 @@
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_kg">取重(kg)</string>
+
 </resources>

@@ -32,6 +32,7 @@ import com.dclee.recovery.view.device.DeviceActivity;
 import com.dclee.recovery.view.order_summary.OrderSummaryActivity;
 import com.dclee.recovery.view.orderlist.OrderAdminListActivity;
 import com.dclee.recovery.view.orderlist.OrderListActivity;
+import com.dclee.recovery.view.sorting.SortInListActivity;
 import com.dclee.recovery.view.sorting.SortingReqActivity;
 import com.google.gson.JsonObject;
 import com.longsh.optionframelibrary.OptionMaterialDialog;
@@ -62,6 +63,10 @@ public class HomeFrag extends BaseFragment {
     private LinearLayout llOrderSummary;
     private LinearLayout llCheckOrderAct;
     private LinearLayout llDeviceAct;
+
+    private LinearLayout ll_sort_req;
+    private LinearLayout ll_sort_in;
+
 
     private final int REQ_SCANE_CODE = 0x200;
     private String mUserId;
@@ -192,12 +197,24 @@ public class HomeFrag extends BaseFragment {
             }
         });
 
-        llOrders.setOnClickListener(new View.OnClickListener() {
+        ll_sort_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toClass(mActivity, SortInListActivity.class);
+            }
+        });
+
+        ll_sort_req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toClass(mActivity, SortingReqActivity.class);
-                // zkfdebug
-              //  toOrdersActivity();
+            }
+        });
+
+        llOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toOrdersActivity();
             }
         });
 
@@ -253,6 +270,9 @@ public class HomeFrag extends BaseFragment {
         llOrderSummary = view.findViewById(R.id.ll_orderSummary);
         llCheckOrderAct = view.findViewById(R.id.ll_checkOrderAct);
         llDeviceAct = view.findViewById(R.id.ll_deviceAct);
+        ll_sort_req = view.findViewById(R.id.ll_sort_req);
+        ll_sort_in = view.findViewById(R.id.ll_sort_in);
+
     }
 
     @Override
