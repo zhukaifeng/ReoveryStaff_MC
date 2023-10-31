@@ -1,6 +1,6 @@
 <resources>
     <string name="application_name">嘉达通蓝牙版</string>
-    <string name="base_url">https://yzmckj.cn/api/</string>
+    <string name="base_url">http://8.141.163.122:8082/prod-api/</string>
     <string name="res_url">https://yzmckj.cn/uploads/</string>
     <string name="title_activity_mine">MineActivity</string>
     <string name="toast_2">服务已断开!</string>

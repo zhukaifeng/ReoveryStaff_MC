@@ -80,10 +80,13 @@ public class RequestUtil {
     }
 
     public <T> void doPostWithoutToken(final String url, RequestParams requestParams, final Class<T> clazz, final OnRequestFinishListener<T> listener) {
-        requestParams.addParameter("serial_no", Config.SERIALNO);
+//        requestParams.addParameter("serial_no", Config.SERIALNO);
+        //requestParams.setBodyContent("application/json;charset=UTF-8");
+        requestParams.addHeader("content-type","application/json; charset=UTF-8");
         requestParams.setUri(activity.getResources().getString(R.string.base_url) + url);
+        requestParams.setBodyContentType("application/json; charset=UTF-8");
         Log.i("requestParams", requestParams.toString());
-
+        requestParams.setAsJsonContent(true);
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public boolean onCache(String result) {

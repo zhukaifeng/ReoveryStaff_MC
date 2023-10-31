@@ -186,6 +186,7 @@
                 android:layout_marginTop="24dp"
                 android:orientation="horizontal"
                 android:paddingLeft="30dp"
+                android:visibility="gone"
                 android:paddingRight="30dp">
 
                 <LinearLayout
@@ -244,6 +245,7 @@
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 android:paddingLeft="30dp"
+                android:visibility="gone"
                 android:paddingRight="30dp">
 
                 <LinearLayout
@@ -303,31 +305,6 @@
                 android:orientation="horizontal"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp">
-
-                <LinearLayout
-                    android:id="@+id/ll_checkOrderAct"
-                    android:layout_width="0dp"
-                    android:layout_height="104dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/white_round10_bg"
-                    android:elevation="1dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="53dp"
-                        android:layout_height="53dp"
-                        android:layout_marginBottom="8dp"
-                        android:src="@mipmap/icon_home_pd" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="已审核"
-                        android:textSize="16dp" />
-                </LinearLayout>
-
                 <LinearLayout
                     android:id="@+id/ll_deviceAct"
                     android:layout_width="0dp"
@@ -351,6 +328,33 @@
                         android:text="设备管理"
                         android:textSize="16dp" />
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_checkOrderAct"
+                    android:layout_width="0dp"
+                    android:layout_height="104dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+
+                    android:background="@drawable/white_round10_bg"
+                    android:elevation="1dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="53dp"
+                        android:layout_height="53dp"
+                        android:layout_marginBottom="8dp"
+                        android:src="@mipmap/icon_home_pd" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="已审核"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+
             </LinearLayout>
         </LinearLayout>
 

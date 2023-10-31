@@ -23,8 +23,8 @@ public class CacheUtil {
     }
 
     public static void login(LoginResult loginInfo) {
-        set(KEY_ACCESS_TOKEN, loginInfo.getAccess_token());
-        set(KEY_TOKEN_TYPE, loginInfo.getToken_type());
+        set(KEY_ACCESS_TOKEN, loginInfo.getToken());
+      //  set(KEY_TOKEN_TYPE, loginInfo.getToken_type());
     }
 
     public static String getAccessToken() {

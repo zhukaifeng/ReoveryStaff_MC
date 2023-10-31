@@ -57,6 +57,10 @@ public class LoginActivity extends BaseActivity {
 
         String msg1 = "已阅读并同意";
         String msg2 = "《禹洲美城骑手协议》";
+        //zkfdebug
+        mAccount.setText("NX001");
+        mPassword.setText("123456");
+        cbPn.setChecked(true);
 
         SpannableString spannableString = new SpannableString(msg1 + msg2);
         spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.lite_blue)), msg1.length(), (msg1 + msg2).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -75,9 +79,9 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Log.d("zkf","click 1");
-
-                Intent intent=new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
+                doLogin();
+//                Intent intent=new Intent(LoginActivity.this, HomeActivity.class);
+//                startActivity(intent);
               //  startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 
             }
@@ -93,9 +97,9 @@ public class LoginActivity extends BaseActivity {
     }
 
     @SuppressLint("CheckResult")
-    public void doLogin(View view) {
+    public void doLogin() {
         if (!cbPn.isChecked()) {
-            T.showShort(mActivity, "请先同意禹洲美城骑手协议");
+            T.showShort(mActivity, "请先同意嘉达通蓝牙版骑手协议");
             return;
         }
         new RxPermissions(this).request(Manifest.permission.INTERNET)
@@ -113,11 +117,11 @@ public class LoginActivity extends BaseActivity {
                             requestParams.addParameter("username", account);
                             requestParams.addParameter("password", password);
 
-                            String umToken = PreferencesUtils.getString(mActivity, Config.UM_TOKEN, "");
-                            if (!TextUtils.isEmpty(umToken))
-                                requestParams.addParameter("deviceToken", umToken);
+//                            String umToken = PreferencesUtils.getString(mActivity, Config.UM_TOKEN, "");
+//                            if (!TextUtils.isEmpty(umToken))
+//                                requestParams.addParameter("deviceToken", umToken);
 
-                            mRequestUtil.doPostWithoutToken("s1/login", requestParams, LoginResult.class, new RequestUtil.OnRequestFinishListener<LoginResult>() {
+                            mRequestUtil.doPostWithoutToken("app/common/login", requestParams, LoginResult.class, new RequestUtil.OnRequestFinishListener<LoginResult>() {
                                 @Override
                                 public void onRequestSuccess(LoginResult result) {
                                     CacheUtil.login(result);

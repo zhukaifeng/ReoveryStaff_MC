@@ -277,9 +277,11 @@ public class HomeFrag extends BaseFragment {
 
     @Override
     protected void initData() {
+            Log.d("zkf","CacheUtil.getAccessToken():" + CacheUtil.getAccessToken());
         if (TextUtils.isEmpty(CacheUtil.getAccessToken())) {
-          //  toClass(mActivity, LoginActivity.class);
-          //  getActivity().finish();
+            Log.d("zkf","is empty");
+            toClass(mActivity, LoginActivity.class);
+            getActivity().finish();
             return;
         }
         if (!AndroidUtil.isServiceExisted(getActivity(), UpdatePositionService.class.getName())) {
@@ -317,8 +319,8 @@ public class HomeFrag extends BaseFragment {
             @Override
             public void onRequestFail(int errorCode, String desc) {
                 Log.e("requestParams", "errorCode " + errorCode + " desc " + desc);
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-                getActivity().finish();
+//                startActivity(new Intent(getActivity(), LoginActivity.class));
+//                getActivity().finish();
             }
 
             @Override
