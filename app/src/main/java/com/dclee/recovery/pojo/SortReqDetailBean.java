@@ -2,29 +2,11 @@ package com.dclee.recovery.pojo;
 
 import java.util.List;
 
-public class SortInListBean {
+public class SortReqDetailBean {
 
-
-    private int total;
-    private List<RowsBean> rows;
     private int code;
     private String msg;
-
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public List<RowsBean> getRows() {
-        return rows;
-    }
-
-    public void setRows(List<RowsBean> rows) {
-        this.rows = rows;
-    }
+    private DataBean data;
 
     public int getCode() {
         return code;
@@ -42,7 +24,15 @@ public class SortInListBean {
         this.msg = msg;
     }
 
-    public static class RowsBean {
+    public DataBean getData() {
+        return data;
+    }
+
+    public void setData(DataBean data) {
+        this.data = data;
+    }
+
+    public static class DataBean {
         private String receiveId;
         private String deptId;
         private String deptIdText;
@@ -51,8 +41,8 @@ public class SortInListBean {
         private String receiveNo;
         private String realTimeOutBound;
         private String realTimeOutBoundText;
-        private String orderNo;
-        private String customerName;
+        private Object orderNo;
+        private Object customerName;
         private String categoryName;
         private String productName;
         private String categoryId;
@@ -70,14 +60,14 @@ public class SortInListBean {
         private Object intoStorehouseWeight;
         private Object differenceWeight;
         private String orderId;
-        private List<?> productList;
+        private Object productList;
         private String receiveStatus;
         private String receiveStatusText;
         private String createBy;
         private String createByText;
-        private Object removeSkinList;
+        private List<RemoveSkinListBean> removeSkinList;
         private Object orderReceiveInVoList;
-        private Object sysUserList;
+        private List<SysUserListBean> sysUserList;
         private Object sysProductTypeChooseList;
         private Object sysProductTypeParentChooseList;
         private String receiveType;
@@ -146,19 +136,19 @@ public class SortInListBean {
             this.realTimeOutBoundText = realTimeOutBoundText;
         }
 
-        public String getOrderNo() {
+        public Object getOrderNo() {
             return orderNo;
         }
 
-        public void setOrderNo(String orderNo) {
+        public void setOrderNo(Object orderNo) {
             this.orderNo = orderNo;
         }
 
-        public String getCustomerName() {
+        public Object getCustomerName() {
             return customerName;
         }
 
-        public void setCustomerName(String customerName) {
+        public void setCustomerName(Object customerName) {
             this.customerName = customerName;
         }
 
@@ -298,11 +288,11 @@ public class SortInListBean {
             this.orderId = orderId;
         }
 
-        public List<?> getProductList() {
+        public Object getProductList() {
             return productList;
         }
 
-        public void setProductList(List<?> productList) {
+        public void setProductList(Object productList) {
             this.productList = productList;
         }
 
@@ -338,11 +328,11 @@ public class SortInListBean {
             this.createByText = createByText;
         }
 
-        public Object getRemoveSkinList() {
+        public List<RemoveSkinListBean> getRemoveSkinList() {
             return removeSkinList;
         }
 
-        public void setRemoveSkinList(Object removeSkinList) {
+        public void setRemoveSkinList(List<RemoveSkinListBean> removeSkinList) {
             this.removeSkinList = removeSkinList;
         }
 
@@ -354,11 +344,11 @@ public class SortInListBean {
             this.orderReceiveInVoList = orderReceiveInVoList;
         }
 
-        public Object getSysUserList() {
+        public List<SysUserListBean> getSysUserList() {
             return sysUserList;
         }
 
-        public void setSysUserList(Object sysUserList) {
+        public void setSysUserList(List<SysUserListBean> sysUserList) {
             this.sysUserList = sysUserList;
         }
 
@@ -384,6 +374,147 @@ public class SortInListBean {
 
         public void setReceiveType(String receiveType) {
             this.receiveType = receiveType;
+        }
+
+        public static class RemoveSkinListBean {
+            private String id;
+            private String status;
+            private String weight;
+            private String type;
+            private Object remark;
+            private String updateBy;
+            private Object updateByText;
+            private String updateTime;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getWeight() {
+                return weight;
+            }
+
+            public void setWeight(String weight) {
+                this.weight = weight;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public Object getRemark() {
+                return remark;
+            }
+
+            public void setRemark(Object remark) {
+                this.remark = remark;
+            }
+
+            public String getUpdateBy() {
+                return updateBy;
+            }
+
+            public void setUpdateBy(String updateBy) {
+                this.updateBy = updateBy;
+            }
+
+            public Object getUpdateByText() {
+                return updateByText;
+            }
+
+            public void setUpdateByText(Object updateByText) {
+                this.updateByText = updateByText;
+            }
+
+            public String getUpdateTime() {
+                return updateTime;
+            }
+
+            public void setUpdateTime(String updateTime) {
+                this.updateTime = updateTime;
+            }
+        }
+
+        public static class SysUserListBean {
+            private String userId;
+            private String userIdText;
+            private String openid;
+            private String deptId;
+            private String deptIdText;
+            private String userBusinessType;
+            private Object userBusinessTypeList;
+
+            public String getUserId() {
+                return userId;
+            }
+
+            public void setUserId(String userId) {
+                this.userId = userId;
+            }
+
+            public String getUserIdText() {
+                return userIdText;
+            }
+
+            public void setUserIdText(String userIdText) {
+                this.userIdText = userIdText;
+            }
+
+            public String getOpenid() {
+                return openid;
+            }
+
+            public void setOpenid(String openid) {
+                this.openid = openid;
+            }
+
+            public String getDeptId() {
+                return deptId;
+            }
+
+            public void setDeptId(String deptId) {
+                this.deptId = deptId;
+            }
+
+            public String getDeptIdText() {
+                return deptIdText;
+            }
+
+            public void setDeptIdText(String deptIdText) {
+                this.deptIdText = deptIdText;
+            }
+
+            public String getUserBusinessType() {
+                return userBusinessType;
+            }
+
+            public void setUserBusinessType(String userBusinessType) {
+                this.userBusinessType = userBusinessType;
+            }
+
+            public Object getUserBusinessTypeList() {
+                return userBusinessTypeList;
+            }
+
+            public void setUserBusinessTypeList(Object userBusinessTypeList) {
+                this.userBusinessTypeList = userBusinessTypeList;
+            }
         }
     }
 }

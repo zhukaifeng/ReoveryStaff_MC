@@ -18,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dclee.recovery.R;
+import com.dclee.recovery.base.CacheUtil;
 import com.dclee.recovery.bean.event.UploadPic;
+import com.dclee.recovery.pojo.PictureBBean;
 import com.dclee.recovery.util.RequestUtil;
 import com.dclee.recovery.util.ToastUtil;
 import com.dclee.recovery.view.create_order.GlideImageLoader;
@@ -50,6 +52,11 @@ public class TypeImageAdapter extends RecyclerView.Adapter<TypeImageAdapter.Uplo
     private OnImageClickListener onImageClickListener;
     private final int PICK_IMAGE = 1;
     private RequestUtil mRequestUtil;
+
+
+    public List<String> getUploadedImages() {
+        return uploadedImages;
+    }
 
     public void setOnImageClickListener(OnImageClickListener onImageClickListener) {
         this.onImageClickListener = onImageClickListener;
@@ -90,25 +97,36 @@ public class TypeImageAdapter extends RecyclerView.Adapter<TypeImageAdapter.Uplo
                     localPaths.add(path);
                     //requestParams.addBodyParameter("images[" + i + "]", new File(path));
                 }
-                requestParams.addBodyParameter("images", uploadedFiles);
-                //requestParams.addBodyParameter("images", getFileMap(localPaths));
-                final LoadingDialog loadingDialog = new LoadingDialog(context)
-                        .setLoadingText("图片上传中...");
-                loadingDialog.show();
-                mRequestUtil.postList("s1/uploads", requestParams, String.class, new RequestUtil.OnRequestFinishListener<List<String>>() {
-                    @Override
-                    public void onRequestSuccess(List<String> result) {
-                        uploadedImages.addAll(localPaths);
-                        notifyDataSetChanged();
-                        loadingDialog.close();
-                        EventBus.getDefault().post(new UploadPic(result));
-                    }
+                uploadedImages.addAll(localPaths);
+                notifyDataSetChanged();
+//                for (int i = 0; i < uploadedFiles.size(); i++) {
+//                    String localPic = localPaths.get(i);
+//                    requestParams.addBodyParameter("file", uploadedFiles.get(i));
+//                    //requestParams.addBodyParameter("images", getFileMap(localPaths));
+//                    final LoadingDialog loadingDialog = new LoadingDialog(context)
+//                            .setLoadingText("图片上传中...");
+//                    loadingDialog.show();
+//                    mRequestUtil.postFile("app/common/uploadPic", requestParams, PictureBBean.class, new RequestUtil.OnRequestFinishListener<PictureBBean>() {
+//                        @Override
+//                        public void onRequestSuccess(PictureBBean result) {
+//                            uploadedImages.add(localPic);
+//                            notifyDataSetChanged();
+//                            loadingDialog.close();
+//                            Log.d("zkf","pic url:" + result.getUrl());
+//
+//                            Log.d("zkf","post UploadPic");
+//                           // EventBus.getDefault().post(new UploadPic(result));
+//                        }
+//
+//                        @Override
+//                        public void onRequestFail(int errorCode, String desc) {
+//                            loadingDialog.close();
+//                        }
+//                    });
+//                }
 
-                    @Override
-                    public void onRequestFail(int errorCode, String desc) {
-                        loadingDialog.close();
-                    }
-                });
+
+
             } else {
             }
         }
@@ -175,7 +193,7 @@ public class TypeImageAdapter extends RecyclerView.Adapter<TypeImageAdapter.Uplo
                 }
             });
         } else {
-            Glide.with(context).load(uploadedImages.get(position)).into(holder.selectedImage);
+            Glide.with(context).load(uploadedImages.get(position)).centerCrop().into(holder.selectedImage);
             layoutParams.width = RelativeLayout.LayoutParams.MATCH_PARENT;
             layoutParams.height = RelativeLayout.LayoutParams.MATCH_PARENT;
             holder.itemView.setOnClickListener(new View.OnClickListener() {

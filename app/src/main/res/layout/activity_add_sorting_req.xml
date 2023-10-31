@@ -100,15 +100,18 @@
             android:textSize="16sp"
             />
 
-        <Spinner
-            android:id="@+id/spinner_category"
+        <TextView
+            android:id="@+id/tv_category"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="55dp"
             android:spinnerMode="dropdown"
-            android:theme="@style/customer_spinner_style"
-            android:background="@drawable/shape_spinnner_normal"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:background="@drawable/bg_round_gray"
             />
+
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -132,16 +135,17 @@
             android:text="品名"
             android:textSize="16sp"
             />
-
-        <Spinner
-            android:id="@+id/spinner_product"
+        <TextView
+            android:id="@+id/tv_product"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="55dp"
             android:spinnerMode="dropdown"
-            android:theme="@style/customer_spinner_style"
-            android:background="@drawable/shape_spinnner_normal"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:background="@drawable/bg_round_gray"
             />
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -165,16 +169,17 @@
             android:text="仓位"
             android:textSize="16sp"
             />
-
-        <Spinner
-            android:id="@+id/spinner_position"
+        <TextView
+            android:id="@+id/tv_position"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="55dp"
             android:spinnerMode="dropdown"
-            android:theme="@style/customer_spinner_style"
-            android:background="@drawable/shape_spinnner_normal"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:background="@drawable/bg_round_gray"
             />
+
     </LinearLayout>
 
     <LinearLayout
@@ -199,16 +204,17 @@
             android:text="当前库存"
             android:textSize="16sp"
             />
-
-        <Spinner
-            android:id="@+id/spinner_inventory"
+        <TextView
+            android:id="@+id/tv_inventory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="23dp"
+            android:layout_marginLeft="24dp"
             android:spinnerMode="dropdown"
-            android:theme="@style/customer_spinner_style"
-            android:background="@drawable/shape_spinnner_normal"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:background="@drawable/bg_round_gray"
             />
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -225,16 +231,18 @@
             android:text="领用数量"
             android:textSize="16sp"
             />
-
-        <EditText
-            android:id="@+id/edt_count"
+        <TextView
+            android:id="@+id/tv_count"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="30dp"
-            android:hint="请输入领用数量"
-            android:paddingLeft="5dp"
+            android:spinnerMode="dropdown"
+            android:gravity="center"
+            android:textSize="14sp"
             android:background="@drawable/bg_round_gray"
             />
+
+
     </LinearLayout>
 
 
@@ -268,7 +276,7 @@
             android:layout_marginLeft="25dp"
             android:text="是"
             style="@style/Widget.AppCompat.CompoundButton.RadioButton"
-            android:checked="true" />
+            android:checked="false" />
         <CheckBox
             android:id="@+id/cb_no"
             android:layout_width="wrap_content"
@@ -276,7 +284,7 @@
             android:layout_marginLeft="30dp"
             android:text="否"
             style="@style/Widget.AppCompat.CompoundButton.RadioButton"
-            android:checked="true" />
+            android:checked="false" />
 
     </LinearLayout>
 
@@ -319,6 +327,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="16dp"
+
+        android:visibility="gone"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             >
@@ -365,6 +375,21 @@
             android:background="@drawable/bg_round_gray"
             />
     </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="100dp"
+            android:layout_height="38dp"
+            android:text="保存"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:background="@drawable/bg_btn_green"
+            />
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

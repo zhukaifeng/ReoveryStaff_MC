@@ -144,7 +144,68 @@ public class RequestUtil {
             }
         });
     }
+    public <T> void doPostWithToken2(final String url, RequestParams requestParams, final Class<T> clazz, OnRequestFinishListener<String> listener) {
+//        requestParams.addParameter("serial_no", Config.SERIALNO);
+        //requestParams.setBodyContent("application/json;charset=UTF-8");
+        requestParams.addHeader("Authorization", "Bearer" + " " + CacheUtil.getAccessToken());
+        requestParams.addHeader("content-type","application/json; charset=UTF-8");
+        requestParams.setUri(activity.getResources().getString(R.string.base_url) + url);
+        requestParams.setBodyContentType("application/json; charset=UTF-8");
+        Log.i("requestParams", requestParams.toString());
+        requestParams.setAsJsonContent(true);
+        x.http().post(requestParams, new Callback.CacheCallback<String>() {
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
 
+            @Override
+            public void onSuccess(final String resultStr) {
+                Log.i("requestParams", resultStr);
+                final Response<T> result = FastJsonTools.getResponse(resultStr, clazz);
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (result.getCode() == 200 || result.getCode() == 0) {
+                            Log.i("requestParams", "1111");
+                            if (url.contains("sendVerificationCode")) {
+                                Log.i("requestParams", "2222");
+                                listener.onRequestSuccess(null);
+                            } else {
+                                listener.onRequestSuccess(resultStr);
+                            }
+                        } else {
+                            ToastUtil.showToast(activity, result.getMessage());
+                            listener.onRequestFail(result.getCode(), result.getMessage());
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("requestParams", ex.getMessage());
+                ex.printStackTrace();
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showToast(activity, "未知错误");
+                        listener.onRequestFail(500, "未知错误");
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
     public <T> void doPostWithoutToken(final String url, RequestParams requestParams, final Class<T> clazz, final OnRequestFinishListener<T> listener) {
 //        requestParams.addParameter("serial_no", Config.SERIALNO);
         //requestParams.setBodyContent("application/json;charset=UTF-8");
@@ -292,20 +353,76 @@ public class RequestUtil {
             }
         });
     }
-
-
-    public <T> void postList(String url, RequestParams requestParams, final Class<T> clazz, final OnRequestFinishListener<List<T>> listener) {
-        String token = CacheUtil.getTokenType() + " " + CacheUtil.getAccessToken();
-        requestParams.addHeader("Authorization", token);
-        requestParams.addParameter("serial_no", Config.SERIALNO);
+    public <T> void postFile(String url, RequestParams requestParams, final Class<T> clazz, final OnRequestFinishListener<T> listener) {
+//        String token = CacheUtil.getTokenType() + " " + CacheUtil.getAccessToken();
+//        requestParams.addHeader("Authorization", token);
+//        requestParams.addParameter("serial_no", Config.SERIALNO);
+        requestParams.addHeader("Authorization", "Bearer" + " " + CacheUtil.getAccessToken());
+        requestParams.addHeader("content-type","application/json; charset=UTF-8");
         requestParams.setUri(activity.getResources().getString(R.string.base_url) + url);
-        Log.e("requestParams", requestParams.toString());
-        Log.e("requestParams", token);
+        requestParams.setConnectTimeout(60*1000);
+        Log.e("requestParams222", requestParams.toString());
+//        Log.e("requestParams", token);
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
 
             @Override
             public void onSuccess(final String resultStr) {
-                Log.e("requestParams", resultStr);
+                Log.e("requestParams111", resultStr);
+                final Response<T> result = FastJsonTools.getResponse(resultStr, clazz);
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (result.getCode() == 200 || result.getCode() == 0) {
+                            listener.onRequestSuccess(result.getData());
+                        } else {
+                            ToastUtil.showToast(activity, result.getMessage());
+                            listener.onRequestFail(result.getCode(), result.getMessage());
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                ex.printStackTrace();
+                Log.e("requestParams error : ", ex.getMessage());
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showToast(activity, "未知错误");
+                        listener.onRequestFail(500, "未知错误");
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+        });
+    }
+
+
+    public <T> void postList(String url, RequestParams requestParams, final Class<T> clazz, final OnRequestFinishListener<List<T>> listener) {
+//        String token = CacheUtil.getTokenType() + " " + CacheUtil.getAccessToken();
+//        requestParams.addHeader("Authorization", token);
+//        requestParams.addParameter("serial_no", Config.SERIALNO);
+        requestParams.addHeader("Authorization", "Bearer" + " " + CacheUtil.getAccessToken());
+        requestParams.addHeader("content-type","application/json; charset=UTF-8");
+        requestParams.setUri(activity.getResources().getString(R.string.base_url) + url);
+        Log.e("requestParams222", requestParams.toString());
+//        Log.e("requestParams", token);
+        x.http().post(requestParams, new Callback.CommonCallback<String>() {
+
+            @Override
+            public void onSuccess(final String resultStr) {
+                Log.e("requestParams111", resultStr);
                 final Response<List<T>> result = FastJsonTools.getResponseList(resultStr, clazz);
                 activity.runOnUiThread(new Runnable() {
                     @Override

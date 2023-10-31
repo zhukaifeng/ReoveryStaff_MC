@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dclee.recovery.R;
 import com.dclee.recovery.base.BaseAdapter;
 import com.dclee.recovery.pojo.OrderBean;
+import com.dclee.recovery.pojo.SortInListBean;
 import com.dclee.recovery.util.RequestUtil;
 
 import java.text.SimpleDateFormat;
 
-public class SortInListAdapter extends BaseAdapter<OrderBean> {
+public class SortInListAdapter extends BaseAdapter<SortInListBean.RowsBean> {
     private RequestUtil mRequestUtil;
     public static final int REQ_RECV_GOODS = 0x233;
     private SimpleDateFormat resultDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -33,20 +34,21 @@ public class SortInListAdapter extends BaseAdapter<OrderBean> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position, final OrderBean data) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position, final SortInListBean.RowsBean data) {
         View itemView = viewHolder.itemView;
 
         TextView tv_site = itemView.findViewById(R.id.tv_site);
-        TextView tv_customer = itemView.findViewById(R.id.tv_customer);
-        TextView tv_type = itemView.findViewById(R.id.tv_type);
-        TextView tv_count = itemView.findViewById(R.id.tv_count);
-        TextView tv_date = itemView.findViewById(R.id.tv_date);
-        TextView tv_sort = itemView.findViewById(R.id.tv_sort);
-        TextView tv_diff = itemView.findViewById(R.id.tv_diff);
+        TextView tv_fenjian = itemView.findViewById(R.id.tv_fenjian);
+        TextView tv_lingyong = itemView.findViewById(R.id.tv_lingyong);
+        TextView tv_category = itemView.findViewById(R.id.tv_category);
+        TextView tv_sn = itemView.findViewById(R.id.tv_sn);
+        TextView tv_time = itemView.findViewById(R.id.tv_time);
+        TextView tv_status = itemView.findViewById(R.id.tv_status);
+        TextView tv_chayi = itemView.findViewById(R.id.tv_chayi);
 
 
-
-
+        tv_time.setText(data.getCreateTime());
+       // tv_sn.setText(data.get);
 
 
 

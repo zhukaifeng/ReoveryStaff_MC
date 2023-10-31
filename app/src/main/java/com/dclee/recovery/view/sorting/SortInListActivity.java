@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,7 +16,9 @@ import com.dclee.recovery.base.BaseActivity;
 import com.dclee.recovery.base.BaseAdapter;
 import com.dclee.recovery.base.CacheUtil;
 import com.dclee.recovery.pojo.OrderBean;
+import com.dclee.recovery.pojo.OrderCreateBean;
 import com.dclee.recovery.pojo.SortInListBean;
+import com.dclee.recovery.util.FastJsonTools;
 import com.dclee.recovery.util.RequestUtil;
 import com.dclee.recovery.util.ToastUtil;
 import com.dclee.recovery.view.home.HomeActivity;
@@ -81,18 +84,18 @@ public class SortInListActivity extends BaseActivity {
     @SuppressLint("CheckResult")
     @Override
     public void initData() {
-        List<OrderBean> result = new ArrayList<>();
-        result.add(new OrderBean());
-        result.add(new OrderBean());
-        result.add(new OrderBean());
-        result.add(new OrderBean());
-        result.add(new OrderBean());
-        result.add(new OrderBean());
-        mAdapter.setDatas(result);
+//        List<OrderBean> result = new ArrayList<>();
+//        result.add(new OrderBean());
+//        result.add(new OrderBean());
+//        result.add(new OrderBean());
+//        result.add(new OrderBean());
+//        result.add(new OrderBean());
+//        result.add(new OrderBean());
        getData();
     }
 
     private void getData() {
+        Log.d("zkf","getdata");
         new RxPermissions(this).request(Manifest.permission.INTERNET)
                 .subscribe(new Consumer<Boolean>() {
                     @Override
@@ -100,11 +103,13 @@ public class SortInListActivity extends BaseActivity {
                         RequestParams requestParams = new RequestParams();
                         requestParams.addParameter("pageNum", pageNum);
                         requestParams.addParameter("pageSize", pageSize);
-                        mRequestUtil.doPostWithToken("mobile/orderReceive/orderReceive", requestParams, SortInListBean.class, new RequestUtil.OnRequestFinishListener<SortInListBean>() {
+                        mRequestUtil.doPostWithToken2("mobile/orderReceive/orderReceive", requestParams, SortInListBean.class, new RequestUtil.OnRequestFinishListener<String>() {
+
 
                             @Override
-                            public void onRequestSuccess(SortInListBean result) {
-
+                            public void onRequestSuccess(String result) {
+                                SortInListBean  data = FastJsonTools.get(result, SortInListBean.class);
+                                mAdapter.setDatas(data.getRows());
                             }
 
                             @Override

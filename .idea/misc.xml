@@ -32,10 +32,9 @@
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_home.xml" value="0.11543394613082514" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_login.xml" value="0.11543394613082514" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_sortin_detail.xml" value="0.3333333333333333" />
-        <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_sortin_list.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_sortin_list.xml" value="0.1" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_sorting_req.xml" value="0.1" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/frag_home.xml" value="0.16666666666666666" />
-        <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/item_for_custom_spinner.xml" value="0.1" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/item_sort_detail.xml" value="0.22" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/item_sort_in.xml" value="0.22" />
         <entry key="app/src/main/res/drawable/bg_blue1.xml" value="0.134" />
@@ -54,6 +53,9 @@
         <entry key="app/src/main/res/drawable/bg_shape_home_top.xml" value="0.134" />
         <entry key="app/src/main/res/drawable/bg_white.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/item_selector.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/shape_spinnner_normal.xml" value="0.20625" />
+        <entry key="app/src/main/res/layout/activity_add_sortin.xml" value="0.1640625" />
+        <entry key="app/src/main/res/layout/activity_add_sorting_req.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_check.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_check_detail.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_check_group.xml" value="0.165" />
@@ -71,6 +73,7 @@
         <entry key="app/src/main/res/layout/activity_query.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_reset_pwd.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_server.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_sortin_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1359375" />
         <entry key="app/src/main/res/layout/activity_upload.xml" value="0.25" />
         <entry key="app/src/main/res/layout/frag_home.xml" value="0.125" />
@@ -82,6 +85,9 @@
         <entry key="app/src/main/res/layout/item_device.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_home_func.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_query.xml" value="0.3047091412742382" />
+        <entry key="app/src/main/res/layout/item_sort_in.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/item_sort_req.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_upload_image.xml" value="0.159375" />
         <entry key="app/src/main/res/layout/layout_bv_dialog.xml" value="0.22" />
         <entry key="app/src/main/res/layout/layout_center_dialog.xml" value="0.125" />
         <entry key="app/src/main/res/layout/layout_check_dialog.xml" value="0.33" />

@@ -65,7 +65,7 @@ public class OrderCreateBean {
         private Object remark;
         private Object qualityRemarks;
         private Object hasReceive;
-        private Object stock;
+        private Integer stock;
         private Object orderType;
         private Object createTime;
         private Object orderTime;
@@ -338,11 +338,11 @@ public class OrderCreateBean {
             this.hasReceive = hasReceive;
         }
 
-        public Object getStock() {
+        public Integer getStock() {
             return stock;
         }
 
-        public void setStock(Object stock) {
+        public void setStock(Integer stock) {
             this.stock = stock;
         }
 
