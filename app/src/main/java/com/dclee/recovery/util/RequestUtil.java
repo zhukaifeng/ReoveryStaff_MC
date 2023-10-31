@@ -25,11 +25,14 @@ public class RequestUtil {
     }
 
     public <T> void doPost(String url, RequestParams requestParams, final Class<T> clazz, final OnRequestFinishListener<T> listener) {
-        requestParams.addHeader("Authorization", CacheUtil.getTokenType() + " " + CacheUtil.getAccessToken());
-        Log.e("requestParams", CacheUtil.getTokenType() + " " + CacheUtil.getAccessToken());
-        requestParams.addParameter("serial_no", Config.SERIALNO);
+        requestParams.addHeader("Authorization", "Bearer" + " " + CacheUtil.getAccessToken());
+        Log.e("zkf requestParams", "Bearer" + " " + CacheUtil.getAccessToken());
         requestParams.setUri(activity.getResources().getString(R.string.base_url) + url);
-        Log.e("requestParams", requestParams.toString());
+        requestParams.addHeader("content-type","application/json; charset=UTF-8");
+        requestParams.setBodyContentType("application/json; charset=UTF-8");
+        requestParams.setAsJsonContent(true);
+
+        Log.e("zkf requestParams", requestParams.toString());
 
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
@@ -46,6 +49,69 @@ public class RequestUtil {
                     public void run() {
                         if (result.getCode() == 200 || result.getCode() == 0) {
                             listener.onRequestSuccess(result.getData());
+                        } else {
+                            ToastUtil.showToast(activity, result.getMessage());
+                            listener.onRequestFail(result.getCode(), result.getMessage());
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("requestParams", ex.getMessage());
+                ex.printStackTrace();
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showToast(activity, "未知错误");
+                        listener.onRequestFail(500, "未知错误");
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    public <T> void doPostWithToken(final String url, RequestParams requestParams, final Class<T> clazz, final OnRequestFinishListener<T> listener) {
+//        requestParams.addParameter("serial_no", Config.SERIALNO);
+        //requestParams.setBodyContent("application/json;charset=UTF-8");
+        requestParams.addHeader("Authorization", "Bearer" + " " + CacheUtil.getAccessToken());
+        requestParams.addHeader("content-type","application/json; charset=UTF-8");
+        requestParams.setUri(activity.getResources().getString(R.string.base_url) + url);
+        requestParams.setBodyContentType("application/json; charset=UTF-8");
+        Log.i("requestParams", requestParams.toString());
+        requestParams.setAsJsonContent(true);
+        x.http().post(requestParams, new Callback.CacheCallback<String>() {
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+
+            @Override
+            public void onSuccess(final String resultStr) {
+                Log.i("requestParams", resultStr);
+                final Response<T> result = FastJsonTools.getResponse(resultStr, clazz);
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (result.getCode() == 200 || result.getCode() == 0) {
+                            Log.i("requestParams", "1111");
+                            if (url.contains("sendVerificationCode")) {
+                                Log.i("requestParams", "2222");
+                                listener.onRequestSuccess(null);
+                            } else {
+                                listener.onRequestSuccess(result.getData());
+                            }
                         } else {
                             ToastUtil.showToast(activity, result.getMessage());
                             listener.onRequestFail(result.getCode(), result.getMessage());
@@ -195,18 +261,24 @@ public class RequestUtil {
         });
     }
 
-    public void doGet(String url, RequestParams requestParams, final OnRequestFinishListener<String> onRequestFinishListener) {
+    public void doGet(String url, RequestParams requestParams, final OnRequestFinishListener<String> listener) {
         requestParams.setUri(url);
+        requestParams.addHeader("Authorization", "Bearer" + " " + CacheUtil.getAccessToken());
+        requestParams.addHeader("content-type","application/json; charset=UTF-8");
+        requestParams.setUri(activity.getResources().getString(R.string.base_url) + url);
+        requestParams.setBodyContentType("application/json; charset=UTF-8");
+        Log.i("requestParams", requestParams.toString());
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
 
             @Override
-            public void onSuccess(String result) {
-                onRequestFinishListener.onRequestSuccess(result);
+            public void onSuccess(String resultStr) {
+                listener.onRequestSuccess(resultStr);
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 ex.printStackTrace();
+                Log.d("zkf","eeeeeee:" + ex.getMessage());
             }
 
             @Override

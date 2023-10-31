@@ -32,9 +32,10 @@
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_home.xml" value="0.11543394613082514" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_login.xml" value="0.11543394613082514" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_sortin_detail.xml" value="0.3333333333333333" />
-        <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_sortin_list.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_sortin_list.xml" value="0.3333333333333333" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/activity_sorting_req.xml" value="0.1" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/frag_home.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/item_for_custom_spinner.xml" value="0.1" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/item_sort_detail.xml" value="0.22" />
         <entry key="..\:/AndroidProject/ReoveryStaff_MC/ReoveryStaff_MC/app/src/main/res/layout/item_sort_in.xml" value="0.22" />
         <entry key="app/src/main/res/drawable/bg_blue1.xml" value="0.134" />

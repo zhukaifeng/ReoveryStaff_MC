@@ -39,14 +39,15 @@
             android:textSize="16sp"
             />
 
-        <EditText
-            android:id="@+id/edt_order_id"
+        <Spinner
+            android:id="@+id/spinner_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="30dp"
-            android:paddingLeft="5dp"
-            android:background="@drawable/bg_round_gray"
-        />
+            android:spinnerMode="dropdown"
+            android:theme="@style/customer_spinner_style"
+            android:background="@drawable/shape_spinnner_normal"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -65,14 +66,15 @@
             android:textSize="16sp"
             />
 
-        <Spinner
-            android:id="@+id/spinner_department"
+        <TextView
+            android:id="@+id/tv_department"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="62dp"
             android:spinnerMode="dropdown"
-            android:theme="@style/customer_spinner_style"
-            android:background="@drawable/shape_spinnner_normal"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:background="@drawable/bg_round_gray"
             />
     </LinearLayout>
     <LinearLayout

@@ -315,7 +315,7 @@ public class HomeFrag extends BaseFragment {
         }
 
 
-        mRequestUtil.doPost("s1/home", new RequestParams(), MainPageData.class, new RequestUtil.OnRequestFinishListener<MainPageData>() {
+       /* mRequestUtil.doPost("s1/home", new RequestParams(), MainPageData.class, new RequestUtil.OnRequestFinishListener<MainPageData>() {
             @Override
             public void onRequestFail(int errorCode, String desc) {
                 Log.e("requestParams", "errorCode " + errorCode + " desc " + desc);
@@ -361,7 +361,7 @@ public class HomeFrag extends BaseFragment {
 
                 PreferencesUtils.putString(mActivity,"assignEnable",result.getAssignEnable());
             }
-        });
+        });*/
     }
 
     @Override

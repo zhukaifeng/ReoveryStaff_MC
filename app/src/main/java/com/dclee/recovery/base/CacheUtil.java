@@ -3,6 +3,7 @@ package com.dclee.recovery.base;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.dclee.recovery.Constant;
 import com.dclee.recovery.pojo.LoginResult;
 
 public class CacheUtil {
@@ -24,6 +25,7 @@ public class CacheUtil {
 
     public static void login(LoginResult loginInfo) {
         set(KEY_ACCESS_TOKEN, loginInfo.getToken());
+        Constant.loginResult = loginInfo;
       //  set(KEY_TOKEN_TYPE, loginInfo.getToken_type());
     }
 
