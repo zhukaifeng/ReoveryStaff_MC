@@ -45,6 +45,7 @@
         android:layout_marginRight="40dp"
         android:onClick="onRegister"
         android:padding="10dp"
+        android:visibility="invisible"
         android:text="注册" />
 
     <LinearLayout

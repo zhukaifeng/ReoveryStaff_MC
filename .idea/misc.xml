@@ -77,7 +77,7 @@
         <entry key="app/src/main/res/layout/activity_sortin_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1359375" />
         <entry key="app/src/main/res/layout/activity_upload.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/frag_home.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/frag_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/frag_me.xml" value="0.11" />
         <entry key="app/src/main/res/layout/item_check_detail.xml" value="0.165" />
         <entry key="app/src/main/res/layout/item_check_group.xml" value="0.2" />

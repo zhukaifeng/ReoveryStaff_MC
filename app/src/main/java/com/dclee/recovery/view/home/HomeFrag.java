@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.dclee.recovery.Constant;
 import com.dclee.recovery.R;
 import com.dclee.recovery.base.BaseFragment;
 import com.dclee.recovery.base.CacheUtil;
@@ -272,18 +273,17 @@ public class HomeFrag extends BaseFragment {
         llDeviceAct = view.findViewById(R.id.ll_deviceAct);
         ll_sort_req = view.findViewById(R.id.ll_sort_req);
         ll_sort_in = view.findViewById(R.id.ll_sort_in);
-
+        mUserName.setText(CacheUtil.getDeptName());
     }
 
     @Override
     protected void initData() {
-            Log.d("zkf","CacheUtil.getAccessToken():" + CacheUtil.getAccessToken());
         if (TextUtils.isEmpty(CacheUtil.getAccessToken())) {
-            Log.d("zkf","is empty");
             toClass(mActivity, LoginActivity.class);
             getActivity().finish();
             return;
         }
+/*
         if (!AndroidUtil.isServiceExisted(getActivity(), UpdatePositionService.class.getName())) {
 
             new RxPermissions(this).request(Manifest.permission.ACCESS_FINE_LOCATION
@@ -313,6 +313,7 @@ public class HomeFrag extends BaseFragment {
                         }
                     });
         }
+*/
 
 
        /* mRequestUtil.doPost("s1/home", new RequestParams(), MainPageData.class, new RequestUtil.OnRequestFinishListener<MainPageData>() {
