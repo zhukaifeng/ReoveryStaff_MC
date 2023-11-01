@@ -27,6 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dclee.recovery.R;
 import com.dclee.recovery.base.BaseActivity;
 import com.dclee.recovery.base.BaseAdapter;
+import com.dclee.recovery.base.DbHelper;
+import com.dclee.recovery.bean.db.SortInBean;
 import com.dclee.recovery.pojo.OrderCreateBean;
 import com.dclee.recovery.pojo.PictureBBean;
 import com.dclee.recovery.pojo.SortDefaultBean;
@@ -40,6 +42,7 @@ import com.sunmi.utils.DoubleUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
+import org.xutils.ex.DbException;
 import org.xutils.http.RequestParams;
 
 import java.io.File;
@@ -73,6 +76,10 @@ public class AddSortInActivity extends BaseActivity {
     private List<String> mPics = new ArrayList<>();
     private int index = 0;
     private SortDefaultBean.DataDTO.SysUserListDTO mOperateBean;
+    private DbHelper dbHelper = new DbHelper();
+
+    public AddSortInActivity() throws DbException {
+    }
 
     @Override
     public int getLayoutId() {
@@ -89,6 +96,7 @@ public class AddSortInActivity extends BaseActivity {
         tv_type = findViewById(R.id.tv_type);
         edt_buckle = findViewById(R.id.edt_buckle);
         selectedImgRecycler = findViewById(R.id.selected_img_recycler);
+
         selectedImgRecycler.setLayoutManager(new GridLayoutManager(this, 2));
         typeImageAdapter = new TypeImageAdapter(this, mRequestUtil);
         // typeImageAdapter.setUploadedImages(receiveParam.getImages());
@@ -131,13 +139,17 @@ public class AddSortInActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                double weight = Double.parseDouble(edt_weight.getText().toString());
-                double buckle = Double.parseDouble(edt_buckle.getText().toString());
+                if (!TextUtils.isEmpty(edt_weight.getText().toString())
+                &&!TextUtils.isEmpty(edt_buckle.getText().toString())){
+                    double weight = Double.parseDouble(edt_weight.getText().toString());
+                    double buckle = Double.parseDouble(edt_buckle.getText().toString());
 //                    if (weight<buckle){
 //                        Toast.
 //                    }
-                double netweight = DoubleUtils.sub(weight, buckle);
-                tv_netweight.setText(String.valueOf(netweight));
+                    double netweight = DoubleUtils.sub(weight, buckle);
+                    tv_netweight.setText(String.valueOf(netweight));
+                }
+
             }
         });
         listForPersonSpinner.add("请选择");
@@ -210,61 +222,49 @@ public class AddSortInActivity extends BaseActivity {
             createOrder();
         }
 
+        tv_add_continue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_weight.setText("");
+                mOperateBean = null;
+                spinner_operate.setSelection(0);
+                mPics.clear();
+                index = 0;
+                mSelectType = null;
+                mCurrentSelectIndex =0;
+                tv_type.setText("");
+                edt_weight.setText("");
+                edt_buckle.setText("");
+                tv_netweight.setText("");
+                List<String> tmp = new ArrayList<>();
+                typeImageAdapter.setUploadedImages(tmp);
+            }
+        });
 
     }
 
     @SuppressLint("CheckResult")
     private void createOrder() {
-
-        new RxPermissions(this).request(Manifest.permission.INTERNET)
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        RequestParams requestParams = new RequestParams();
-                        SortRequestBean sortRequestBean = new SortRequestBean();
-                        if (!TextUtils.isEmpty(edt_weight.getText().toString())) {
-                           // requestParams.addBodyParameter("weight", edt_weight.getText().toString());
-                            sortRequestBean.setWeight(edt_weight.getText().toString());
-                        }
-                        if (!TextUtils.isEmpty(edt_buckle.getText().toString())) {
-                          //  requestParams.addBodyParameter("deductWeight", edt_buckle.getText().toString());
-                            sortRequestBean.setDeductWeight( edt_buckle.getText().toString());
-                        }
-                        if (mPics.size() > 0) {
-                            StringBuffer stringBuffer = new StringBuffer();
-                            for (String s : mPics) {
-                                stringBuffer.append(s).append(",");
-                            }
-                            String value = stringBuffer.toString().substring(0,stringBuffer.toString().length()-1);
-                            sortRequestBean.setPicIdStr(value);
-                        }
-                        sortRequestBean.setSorter(mOperateBean.getUserId());
-                        sortRequestBean.setProductId(mSelectType.getProductId());
-                        List<SortRequestBean> list = new ArrayList<>();
-                        list.add(sortRequestBean);
-                        requestParams.addBodyParameter("orderReceiveInVoList",list);
-                        requestParams.addBodyParameter("receiveId", receiveId);
-
-
-                        final LoadingDialog loadingDialog = new LoadingDialog(AddSortInActivity.this)
-                                .setLoadingText("保存中...");
-                        mRequestUtil.doPostWithToken("/mobile/orderReceive/add", requestParams, SortInListBean.class, new RequestUtil.OnRequestFinishListener<SortInListBean>() {
-
-                            @Override
-                            public void onRequestSuccess(SortInListBean result) {
-                                loadingDialog.close();
-                                Toast.makeText(AddSortInActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-
-                            @Override
-                            public void onRequestFail(int errorCode, String desc) {
-
-                            }
-                        });
-                    }
-                });
-
+        SortInBean sortInBean = new SortInBean();
+        sortInBean.setSorter(mOperateBean.getUserId());
+        sortInBean.setDeductWeight(edt_buckle.getText().toString());
+        if (mPics.size() > 0) {
+            StringBuffer stringBuffer = new StringBuffer();
+            for (String s : mPics) {
+                stringBuffer.append(s).append(",");
+            }
+            String value = stringBuffer.toString().substring(0, stringBuffer.toString().length() - 1);
+            sortInBean.setPicIdStr(value);
+        }
+        sortInBean.setReceiveId(receiveId);
+        sortInBean.setProductId(mSelectType.getProductId());
+        sortInBean.setWeight(edt_weight.getText().toString());
+        sortInBean.setProductName(mSelectType.getProductTypeName());
+        sortInBean.setSorterName(mOperateBean.getUserIdText());
+        boolean success = dbHelper.addSortInBean(sortInBean);
+        if (success){
+            Toast.makeText(AddSortInActivity.this,"保存成功",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void uploadFile() {
@@ -274,7 +274,7 @@ public class AddSortInActivity extends BaseActivity {
         requestParams.setMultipart(true);
         requestParams.addBodyParameter("file", file);
         final LoadingDialog loadingDialog = new LoadingDialog(AddSortInActivity.this)
-                .setLoadingText("图片上传中...");
+                .setLoadingText("图片上传中请稍后...");
         loadingDialog.show();
         mRequestUtil.postFile("app/common/uploadPic", requestParams, PictureBBean.class, new RequestUtil.OnRequestFinishListener<PictureBBean>() {
             @Override
@@ -325,11 +325,11 @@ public class AddSortInActivity extends BaseActivity {
             PopupTypeAdapter typeAdapter = new PopupTypeAdapter(this);
             rv_type.setLayoutManager(new LinearLayoutManager(this));
             rv_type.setAdapter(typeAdapter);
-//            if (mSortDefaultBean.getData().getSysProductTypeParentChooseList().size() > 0) {
-//                typeAdapter.setDatas(mSortDefaultBean.getData().getSysProductTypeParentChooseList().get(0).getChildren());
-//                mSortDefaultBean.getData().getSysProductTypeParentChooseList().get(0).getChildren().get(0).setSelected(true);
-//
-//            }
+            if (mSortDefaultBean.getData().getSysProductTypeParentChooseList().size() > 0) {
+                typeAdapter.setDatas(mSortDefaultBean.getData().getSysProductTypeParentChooseList().get(0).getChildren());
+                mSortDefaultBean.getData().getSysProductTypeParentChooseList().get(0).getChildren().get(0).setSelected(true);
+
+            }
             categoryAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {

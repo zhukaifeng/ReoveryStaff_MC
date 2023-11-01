@@ -17,6 +17,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     private LayoutInflater mInflater;
     private Activity mContext;
     private OnItemClickListener onItemClickListener;
+    private OnLongClickListener mOnLongClickListener;
+
+    public interface OnLongClickListener {
+        void onLongClick(View view, int position);
+    }
+    public void setOnLongClickListener(OnLongClickListener listener) {
+        mOnLongClickListener = listener;
+    }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -87,6 +95,15 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
                 if (onItemClickListener != null) {
                     onItemClickListener.onItemClick(position);
                 }
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOnLongClickListener != null) {
+                    mOnLongClickListener.onLongClick(v,position);
+                }
+                return true;
             }
         });
         onBindViewHolder(holder, position, datas.get(position));

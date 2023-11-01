@@ -41,7 +41,7 @@ public class SortInListActivity extends BaseActivity {
     private RequestUtil mRequestUtil;
     private int pageNum = 0;
     private int pageSize = 10;
-
+    private SortInListBean  mData;
 
     @Override
     public int getLayoutId() {
@@ -63,6 +63,9 @@ public class SortInListActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                if (mData.getRows().get(position).getReceiveStatus().equals("3")){
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), SortInDetailActivity.class);
                 intent.putExtra("id",mAdapter.getDatas().get(position).getReceiveId());
                 startActivity(intent);
@@ -116,8 +119,8 @@ public class SortInListActivity extends BaseActivity {
 
                             @Override
                             public void onRequestSuccess(String result) {
-                                SortInListBean  data = FastJsonTools.get(result, SortInListBean.class);
-                                mAdapter.setDatas(data.getRows());
+                                mData = FastJsonTools.get(result, SortInListBean.class);
+                                mAdapter.setDatas(mData.getRows());
                             }
 
                             @Override

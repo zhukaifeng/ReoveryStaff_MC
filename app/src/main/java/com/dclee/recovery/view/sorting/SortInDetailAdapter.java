@@ -2,6 +2,7 @@ package com.dclee.recovery.view.sorting;
 
 import android.app.Activity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,23 +10,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dclee.recovery.R;
 import com.dclee.recovery.base.BaseAdapter;
+import com.dclee.recovery.bean.db.SortInBean;
 import com.dclee.recovery.pojo.OrderBean;
 import com.dclee.recovery.pojo.SortReqDetailBean;
 import com.dclee.recovery.util.RequestUtil;
+import com.sunmi.utils.DoubleUtils;
 
 import java.text.SimpleDateFormat;
 
-public class SortInDetailAdapter extends BaseAdapter<SortReqDetailBean.DataDTO.OrderReceiveInVoListDTO> {
-    private RequestUtil mRequestUtil;
-    public static final int REQ_RECV_GOODS = 0x233;
-    private SimpleDateFormat resultDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    private SimpleDateFormat originDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private Activity mContent;
+public class SortInDetailAdapter extends BaseAdapter<SortInBean> {
+
 
     public SortInDetailAdapter(Activity context) {
         super(context);
-        mContent = context;
-        mRequestUtil = new RequestUtil(context);
+
     }
 
     @Override
@@ -34,7 +32,7 @@ public class SortInDetailAdapter extends BaseAdapter<SortReqDetailBean.DataDTO.O
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position, final SortReqDetailBean.DataDTO.OrderReceiveInVoListDTO data) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position, final SortInBean data) {
         View itemView = viewHolder.itemView;
 
         TextView tv_name = itemView.findViewById(R.id.tv_name);
@@ -45,11 +43,11 @@ public class SortInDetailAdapter extends BaseAdapter<SortReqDetailBean.DataDTO.O
         TextView tv_operate = itemView.findViewById(R.id.tv_operate);
 
 
-        if (!TextUtils.isEmpty(data.getSorterText())){
-            tv_name.setText(data.getSorterText());
+        if (!TextUtils.isEmpty(data.getSorterName())){
+            tv_name.setText(data.getSorterName());
         }
-        if (!TextUtils.isEmpty(data.getProductIdText())){
-            tv_type.setText(data.getProductIdText());
+        if (!TextUtils.isEmpty(data.getProductName())){
+            tv_type.setText(data.getProductName());
         }
         if (!TextUtils.isEmpty(data.getWeight())){
             tv_weight.setText(data.getWeight());
@@ -57,13 +55,14 @@ public class SortInDetailAdapter extends BaseAdapter<SortReqDetailBean.DataDTO.O
         if (!TextUtils.isEmpty(data.getDeductWeight())){
             tv_buckle.setText(data.getDeductWeight());
         }
-        if (!TextUtils.isEmpty(data.getNetWeight())){
-            tv_netweight.setText(data.getNetWeight());
+        if (!TextUtils.isEmpty(data.getDeductWeight())&&
+                !TextUtils.isEmpty(data.getWeight())){
+            double weight = Double.parseDouble(data.getWeight().toString());
+            double buckle = Double.parseDouble(data.getDeductWeight().toString());
+            double netweight = DoubleUtils.sub(weight, buckle);
+            tv_netweight.setText(String.valueOf(netweight));
         }
-//        if (!TextUtils.isEmpty(data.getNetWeight())){
-//            tv_operate.setText(data.getNetWeight());
-//        }
-
-
+        if (!TextUtils.isEmpty(data.getPicIdStr()))
+        Log.d("zkf","picurl:" + data.getPicIdStr());
     }
 }

@@ -2,11 +2,14 @@ package com.dclee.recovery.view.sorting;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -14,15 +17,21 @@ import com.androidkun.PullToRefreshRecyclerView;
 import com.dclee.recovery.R;
 import com.dclee.recovery.base.BaseActivity;
 import com.dclee.recovery.base.BaseAdapter;
+import com.dclee.recovery.base.DbHelper;
+import com.dclee.recovery.bean.db.SortInBean;
 import com.dclee.recovery.pojo.OrderBean;
 import com.dclee.recovery.pojo.SortInListBean;
 import com.dclee.recovery.pojo.SortReqDetailBean;
 import com.dclee.recovery.util.FastJsonTools;
 import com.dclee.recovery.util.RequestUtil;
+import com.dclee.recovery.view.purchase.SortRequestBean;
 import com.dclee.recovery.wedget.TitleBar;
+import com.sunmi.utils.DoubleUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.umeng.commonsdk.debug.I;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
+import org.xutils.ex.DbException;
 import org.xutils.http.RequestParams;
 
 import java.util.ArrayList;
@@ -45,7 +54,12 @@ public class SortInDetailActivity extends BaseActivity {
     private TextView tv_add;
     private TextView tv_submit;
     private RequestUtil mRequestUtil;
-    private  String receiveId;
+    private String receiveId;
+    private DbHelper dbHelper = new DbHelper();
+    private List<SortInBean> mDataList = new ArrayList<>();
+    private SortReqDetailBean mData;
+    public SortInDetailActivity() throws DbException {
+    }
 
     @Override
     public int getLayoutId() {
@@ -79,42 +93,104 @@ public class SortInDetailActivity extends BaseActivity {
 
             }
         });
+        mAdapter.setOnLongClickListener(new BaseAdapter.OnLongClickListener() {
+            @Override
+            public void onLongClick(View view, int position) {
+                AlertDialog.Builder normalDialog = new AlertDialog.Builder(SortInDetailActivity.this);
+                normalDialog.setIcon(R.mipmap.ic_launcher);
+                normalDialog.setTitle("提示");
+                normalDialog.setMessage("确定要删除吗?");
+                normalDialog.setPositiveButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                boolean success =dbHelper.dbDeleteId(mDataList.get(position).getId(),receiveId);
+                                if (success){
+                                    mDataList.remove(position);
+                                    mAdapter.notifyDataSetChanged();
+                                    if (null != mData && null != mData.getData().getReceiveWeight()){
+                                        double allNetWeight =0;
+                                        for (SortInBean sortInBean:mDataList){
+                                            double weight = Double.parseDouble(sortInBean.getWeight().toString());
+                                            double buckle = Double.parseDouble(sortInBean.getDeductWeight().toString());
+                                            double netweight = DoubleUtils.sub(weight, buckle);
+                                            allNetWeight = netweight + allNetWeight;
+                                        }
+                                        double showWeight = DoubleUtils.sub(Double.parseDouble(mData.getData().getReceiveWeight()), allNetWeight);
+                                        tv_diff.setText(String.valueOf(showWeight));
+                                    }
+
+                                    Toast.makeText(SortInDetailActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+                                }
+                                dialog.dismiss();
+                            }
+                        });
+                normalDialog.setNegativeButton("取消",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                normalDialog.show();// 显示
+            }
+        });
+
 
         tv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(SortInDetailActivity.this,AddSortInActivity.class);
-                intent.putExtra("id",receiveId);
+                Intent intent = new Intent(SortInDetailActivity.this, AddSortInActivity.class);
+                intent.putExtra("id", receiveId);
                 startActivity(intent);
+            }
+        });
+
+        tv_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitData();
             }
         });
     }
 
     @Override
     public void initData() {
-//        List<OrderBean> result = new ArrayList<>();
-//        result.add(new OrderBean());
-//        result.add(new OrderBean());
-//        result.add(new OrderBean());
-//        result.add(new OrderBean());
-//        result.add(new OrderBean());
-//        result.add(new OrderBean());
-//        mAdapter.setDatas(result);
+        getDataDetail();
 
-
-        //getDataDetail();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getDataDetail();
+        initList();
+
+    }
+    private void initList() {
+        mDataList.clear();
+        mDataList.addAll(dbHelper.dbFindSortInBeanById(receiveId));
+        mAdapter.setDatas(mDataList);
+
+        if (null != mData && null != mData.getData().getReceiveWeight()){
+            double allNetWeight =0;
+            for (SortInBean sortInBean:mDataList){
+                double weight = Double.parseDouble(sortInBean.getWeight().toString());
+                double buckle = Double.parseDouble(sortInBean.getDeductWeight().toString());
+                double netweight = DoubleUtils.sub(weight, buckle);
+                allNetWeight = netweight + allNetWeight;
+            }
+            double showWeight = DoubleUtils.sub(Double.parseDouble(mData.getData().getReceiveWeight()), allNetWeight);
+            tv_diff.setText(String.valueOf(showWeight));
+        }
+
+
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-     //   EventBus.getDefault().unregister(this);
+        //   EventBus.getDefault().unregister(this);
     }
 
     @SuppressLint("CheckResult")
@@ -130,35 +206,46 @@ public class SortInDetailActivity extends BaseActivity {
 
                             @Override
                             public void onRequestSuccess(String result) {
-                                Log.d("zkf","result:" + result);
-                                SortReqDetailBean data = FastJsonTools.get(result, SortReqDetailBean.class);
+                                Log.d("zkf", "result:" + result);
+                                mData = FastJsonTools.get(result, SortReqDetailBean.class);
 
-                                if (!TextUtils.isEmpty(data.getData().getDeptIdText())){
-                                    tv_site.setText(data.getData().getDeptIdText());
+                                if (!TextUtils.isEmpty(mData.getData().getDeptIdText())) {
+                                    tv_site.setText(mData.getData().getDeptIdText());
                                 }
-                                if (!TextUtils.isEmpty(data.getData().getCustomerName())){
-                                    tv_customer.setText(data.getData().getCustomerName());
+                                if (!TextUtils.isEmpty(mData.getData().getCustomerName())) {
+                                    tv_customer.setText(mData.getData().getCustomerName());
                                 }
-                                if (!TextUtils.isEmpty(data.getData().getCategoryIdText())){
-                                    tv_type.setText(data.getData().getCategoryIdText());
+                                if (!TextUtils.isEmpty(mData.getData().getCategoryIdText())) {
+                                    tv_type.setText(mData.getData().getCategoryIdText());
                                 }
 
-                                if (!TextUtils.isEmpty(data.getData().getReceiveWeight())){
-                                    tv_count.setText(data.getData().getReceiveWeight());
+                                if (!TextUtils.isEmpty(mData.getData().getReceiveWeight())) {
+                                    tv_count.setText(mData.getData().getReceiveWeight());
                                 }
-                                if (!TextUtils.isEmpty(data.getData().getCreateTime())){
-                                    tv_date.setText(data.getData().getCreateTime().substring(0,10));
+                                if (!TextUtils.isEmpty(mData.getData().getCreateTime())) {
+                                    tv_date.setText(mData.getData().getCreateTime().substring(0, 10));
                                 }
-                                if (!TextUtils.isEmpty(data.getData().getIntoStorehouseWeight())){
-                                    tv_sort.setText(data.getData().getIntoStorehouseWeight());
+                                if (!TextUtils.isEmpty(mData.getData().getIntoStorehouseWeight())) {
+                                    tv_sort.setText(mData.getData().getIntoStorehouseWeight());
                                 }
-                                if (!TextUtils.isEmpty(data.getData().getDifferenceWeight())){
-                                    tv_diff.setText(data.getData().getDifferenceWeight());
+
+                                if (null != mData && null != mData.getData().getReceiveWeight()){
+                                    double allNetWeight =0;
+                                    for (SortInBean sortInBean:mDataList){
+                                        double weight = Double.parseDouble(sortInBean.getWeight().toString());
+                                        double buckle = Double.parseDouble(sortInBean.getDeductWeight().toString());
+                                        double netweight = DoubleUtils.sub(weight, buckle);
+                                        allNetWeight = netweight + allNetWeight;
+                                    }
+                                    double showWeight = DoubleUtils.sub(Double.parseDouble(mData.getData().getReceiveWeight()), allNetWeight);
+                                    tv_diff.setText(String.valueOf(showWeight));
                                 }
+//                                if (!TextUtils.isEmpty(mData.getData().getDifferenceWeight())) {
+//                                    tv_diff.setText(mData.getData().getDifferenceWeight());
+//                                }
 //                                tv_inventory.setText(String.valueOf(data.getData().getStock()));
 //                                tv_count.setText(data.getData().getNetWeight());
                                 // edt_remark.setText();
-                                mAdapter.setDatas(data.getData().getOrderReceiveInVoList());
 
                             }
 
@@ -170,6 +257,58 @@ public class SortInDetailActivity extends BaseActivity {
                     }
                 });
 
+    }
+
+    private void submitData() {
+        double showWeight = Double.parseDouble(tv_diff.getText().toString());
+        if (showWeight>150||showWeight< -150){
+            Toast.makeText(SortInDetailActivity.this, "差异大于150", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        new RxPermissions(this).request(Manifest.permission.INTERNET)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        RequestParams requestParams = new RequestParams();
+                        SortRequestBean sortRequestBean = new SortRequestBean();
+
+                        List<SortRequestBean> list = new ArrayList<>();
+                        for (SortInBean sortInBean : mDataList) {
+                            sortRequestBean.setWeight(sortInBean.getWeight());
+                            sortRequestBean.setDeductWeight(sortInBean.getDeductWeight());
+                            sortRequestBean.setProductId(sortInBean.getProductId());
+                            sortRequestBean.setSorter(sortInBean.getSorter());
+                            if (!TextUtils.isEmpty(sortInBean.getPicIdStr())) {
+                                sortRequestBean.setPicIdStr(sortInBean.getPicIdStr());
+                            }
+                            list.add(sortRequestBean);
+                        }
+                        requestParams.addBodyParameter("orderReceiveInVoList", list);
+                        requestParams.addBodyParameter("receiveId", receiveId);
+
+                        final LoadingDialog loadingDialog = new LoadingDialog(SortInDetailActivity.this)
+                                .setLoadingText("保存中...");
+                        mRequestUtil.doPostWithToken2("/mobile/orderReceive/add", requestParams, SortInListBean.class, new RequestUtil.OnRequestFinishListener<String>() {
+
+                            @Override
+                            public void onRequestSuccess(String result) {
+                                loadingDialog.close();
+                                if (result.contains("操作成功")){
+                                    Toast.makeText(SortInDetailActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                    dbHelper.dbDeleteAll(receiveId);
+                                }
+
+                            }
+
+                            @Override
+                            public void onRequestFail(int errorCode, String desc) {
+
+                            }
+                        });
+                    }
+                });
     }
 
 }
