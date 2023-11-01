@@ -88,10 +88,10 @@ public class SortingReqActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(getActivity(), AddSortingReqActivity.class);
-                intent.putExtra("isEdit",true);
-                intent.putExtra("id",mAdapter.getDatas().get(position).getReceiveId());
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), AddSortingReqActivity.class);
+//                intent.putExtra("isEdit",true);
+//                intent.putExtra("id",mAdapter.getDatas().get(position).getReceiveId());
+//                startActivity(intent);
             }
         });
     }
@@ -103,9 +103,16 @@ public class SortingReqActivity extends BaseActivity {
 //        result.add(new OrderBean());
 //        mAdapter.setDatas(result);
 
-        getData();
+
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
+
     private void getData() {
         Log.d("zkf","getdata");
         new RxPermissions(this).request(Manifest.permission.INTERNET)

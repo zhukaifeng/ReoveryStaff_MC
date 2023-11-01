@@ -276,7 +276,7 @@
             android:layout_marginLeft="25dp"
             android:text="是"
             style="@style/Widget.AppCompat.CompoundButton.RadioButton"
-            android:checked="false" />
+            android:checked="true" />
         <CheckBox
             android:id="@+id/cb_no"
             android:layout_width="wrap_content"

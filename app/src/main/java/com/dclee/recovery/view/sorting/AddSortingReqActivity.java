@@ -113,7 +113,7 @@ public class AddSortingReqActivity extends BaseActivity {
         selectedImgRecycler.setAdapter(typeImageAdapter);
 
         if (isEdit){
-            getDataDetail();
+         //   getDataDetail();
 
         }else{
             listForSpinner.add("请选择");
@@ -169,7 +169,8 @@ public class AddSortingReqActivity extends BaseActivity {
 
                 }
             });
-
+            cb_yes.setChecked(true);
+            selectType = 1;
             cb_yes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -224,36 +225,36 @@ public class AddSortingReqActivity extends BaseActivity {
     }
 
     private void getDataDetail() {
-        new RxPermissions(this).request(Manifest.permission.INTERNET)
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        RequestParams requestParams = new RequestParams();
-                        requestParams.addParameter("receiveId", receiveId);
-                        mRequestUtil.doPostWithToken2("mobile/orderReceive/detail", requestParams, SortInListBean.class, new RequestUtil.OnRequestFinishListener<String>() {
-
-
-                            @Override
-                            public void onRequestSuccess(String result) {
-                               Log.d("zkf","result:" + result);
-                                SortReqDetailBean data = FastJsonTools.get(result, SortReqDetailBean.class);
-                                tv_department.setText(data.getData().getDeptName());
-                                tv_category.setText(data.getData().getCategoryName());
-                                tv_product.setText(data.getData().getProductName());
-                                tv_position.setText(data.getData().getStockAddressName());
-//                                tv_inventory.setText(String.valueOf(data.getData().getStock()));
-//                                tv_count.setText(data.getData().getNetWeight());
-                               // edt_remark.setText();
-
-                            }
-
-                            @Override
-                            public void onRequestFail(int errorCode, String desc) {
-
-                            }
-                        });
-                    }
-                });
+//        new RxPermissions(this).request(Manifest.permission.INTERNET)
+//                .subscribe(new Consumer<Boolean>() {
+//                    @Override
+//                    public void accept(Boolean aBoolean) throws Exception {
+//                        RequestParams requestParams = new RequestParams();
+//                        requestParams.addParameter("receiveId", receiveId);
+//                        mRequestUtil.doPostWithToken2("mobile/orderReceive/detail", requestParams, SortInListBean.class, new RequestUtil.OnRequestFinishListener<String>() {
+//
+//
+//                            @Override
+//                            public void onRequestSuccess(String result) {
+//                               Log.d("zkf","result:" + result);
+//                                SortReqDetailBean data = FastJsonTools.get(result, SortReqDetailBean.class);
+//                                tv_department.setText(data.getData().getDeptName());
+//                                tv_category.setText(data.getData().getCategoryName());
+//                                tv_product.setText(data.getData().getProductName());
+//                                tv_position.setText(data.getData().getStockAddressName());
+////                                tv_inventory.setText(String.valueOf(data.getData().getStock()));
+////                                tv_count.setText(data.getData().getNetWeight());
+//                               // edt_remark.setText();
+//
+//                            }
+//
+//                            @Override
+//                            public void onRequestFail(int errorCode, String desc) {
+//
+//                            }
+//                        });
+//                    }
+//                });
 
     }
 
@@ -280,7 +281,6 @@ public class AddSortingReqActivity extends BaseActivity {
                     Log.d("zkf","index1:" + index);
                     Log.d("zkf","post complete");
                     createOrder();
-
                 }
 
                 // EventBus.getDefault().post(new UploadPic(result));

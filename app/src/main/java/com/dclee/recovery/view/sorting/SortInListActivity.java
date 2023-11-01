@@ -63,7 +63,9 @@ public class SortInListActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                startActivity(new Intent(SortInListActivity.this, SortInDetailActivity.class));
+                Intent intent = new Intent(getActivity(), SortInDetailActivity.class);
+                intent.putExtra("id",mAdapter.getDatas().get(position).getReceiveId());
+                startActivity(intent);
             }
         });
         mRecyclerView.setPullToRefreshListener(new PullToRefreshListener() {
@@ -91,7 +93,13 @@ public class SortInListActivity extends BaseActivity {
 //        result.add(new OrderBean());
 //        result.add(new OrderBean());
 //        result.add(new OrderBean());
-       getData();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
     }
 
     private void getData() {

@@ -1,6 +1,7 @@
 package com.dclee.recovery.view.sorting;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -46,12 +47,37 @@ public class SortInListAdapter extends BaseAdapter<SortInListBean.RowsBean> {
         TextView tv_status = itemView.findViewById(R.id.tv_status);
         TextView tv_chayi = itemView.findViewById(R.id.tv_chayi);
 
+        if (!TextUtils.isEmpty(data.getCreateTime())) {
+            tv_time.setText(data.getCreateTime());
+        }
+        if (!TextUtils.isEmpty(data.getReceiveStatusText())) {
+            tv_status.setText(data.getReceiveStatusText());
 
-        tv_time.setText(data.getCreateTime());
-       // tv_sn.setText(data.get);
+        }
+        if (!TextUtils.isEmpty(data.getCategoryName())) {
+            tv_category.setText(data.getCategoryName());
 
+        }
+        if (!TextUtils.isEmpty(data.getOrderNo())) {
+            tv_sn.setText(data.getOrderNo());
 
+        }
+        if (!TextUtils.isEmpty(data.getIntoStorehouseWeight())) {
+            tv_fenjian.setText(data.getIntoStorehouseWeight());
 
+        }
+        if (!TextUtils.isEmpty(data.getReceiveWeight())) {
+            tv_lingyong.setText(data.getReceiveWeight());
+
+        }
+        if (!TextUtils.isEmpty(data.getDifferenceWeight())) {
+            tv_chayi.setText(data.getDifferenceWeight());
+
+        }
+        if (!TextUtils.isEmpty(data.getDeptName())) {
+            tv_site.setText(data.getDeptName());
+
+        }
 
 
     }

@@ -61,14 +61,37 @@ public class SortingReqAdapter extends BaseAdapter<SortInListBean.RowsBean> {
         TextView tv_chayi = itemView.findViewById(R.id.tv_chayi);
 
 
-        tv_time.setText(data.getCreateTime());
-        tv_status.setText(data.getReceiveStatusText());
-        tv_category.setText(data.getCategoryName());
-        tv_sn.setText(data.getOrderNo());
-        tv_fenjian.setText("");
-        tv_lingyong.setText("");
-        tv_chayi.setText("");
-        tv_site.setText("");
+        if (!TextUtils.isEmpty(data.getCreateTime())) {
+            tv_time.setText(data.getCreateTime());
+        }
+        if (!TextUtils.isEmpty(data.getReceiveStatusText())) {
+            tv_status.setText(data.getReceiveStatusText());
+
+        }
+        if (!TextUtils.isEmpty(data.getCategoryName())) {
+            tv_category.setText(data.getCategoryName());
+
+        }
+        if (!TextUtils.isEmpty(data.getOrderNo())) {
+            tv_sn.setText(data.getOrderNo());
+
+        }
+        if (!TextUtils.isEmpty(data.getIntoStorehouseWeight())) {
+            tv_fenjian.setText(data.getIntoStorehouseWeight());
+
+        }
+        if (!TextUtils.isEmpty(data.getReceiveWeight())) {
+            tv_lingyong.setText(data.getReceiveWeight());
+
+        }
+        if (!TextUtils.isEmpty(data.getDifferenceWeight())) {
+            tv_chayi.setText(data.getDifferenceWeight());
+
+        }
+        if (!TextUtils.isEmpty(data.getDeptName())) {
+            tv_site.setText(data.getDeptName());
+
+        }
 
 
     }

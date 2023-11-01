@@ -2,8 +2,7 @@ package com.dclee.recovery.pojo;
 
 import java.util.List;
 
-public class SortReqDetailBean {
-
+public class SortDefaultBean {
 
     private Integer code;
     private String msg;
@@ -58,8 +57,8 @@ public class SortReqDetailBean {
         private String stockAddressIdText;
         private Object stockAddressName;
         private String receiveWeight;
-        private String intoStorehouseWeight;
-        private String differenceWeight;
+        private Object intoStorehouseWeight;
+        private Object differenceWeight;
         private String orderId;
         private Object productList;
         private String receiveStatus;
@@ -67,10 +66,10 @@ public class SortReqDetailBean {
         private String createBy;
         private String createByText;
         private List<RemoveSkinListDTO> removeSkinList;
-        private List<OrderReceiveInVoListDTO> orderReceiveInVoList;
+        private Object orderReceiveInVoList;
         private List<SysUserListDTO> sysUserList;
         private Object sysProductTypeChooseList;
-        private Object sysProductTypeParentChooseList;
+        private List<SysProductTypeParentChooseListDTO> sysProductTypeParentChooseList;
         private String receiveType;
 
         public String getReceiveId() {
@@ -265,19 +264,19 @@ public class SortReqDetailBean {
             this.receiveWeight = receiveWeight;
         }
 
-        public String getIntoStorehouseWeight() {
+        public Object getIntoStorehouseWeight() {
             return intoStorehouseWeight;
         }
 
-        public void setIntoStorehouseWeight(String intoStorehouseWeight) {
+        public void setIntoStorehouseWeight(Object intoStorehouseWeight) {
             this.intoStorehouseWeight = intoStorehouseWeight;
         }
 
-        public String getDifferenceWeight() {
+        public Object getDifferenceWeight() {
             return differenceWeight;
         }
 
-        public void setDifferenceWeight(String differenceWeight) {
+        public void setDifferenceWeight(Object differenceWeight) {
             this.differenceWeight = differenceWeight;
         }
 
@@ -337,11 +336,11 @@ public class SortReqDetailBean {
             this.removeSkinList = removeSkinList;
         }
 
-        public List<OrderReceiveInVoListDTO> getOrderReceiveInVoList() {
+        public Object getOrderReceiveInVoList() {
             return orderReceiveInVoList;
         }
 
-        public void setOrderReceiveInVoList(List<OrderReceiveInVoListDTO> orderReceiveInVoList) {
+        public void setOrderReceiveInVoList(Object orderReceiveInVoList) {
             this.orderReceiveInVoList = orderReceiveInVoList;
         }
 
@@ -361,11 +360,11 @@ public class SortReqDetailBean {
             this.sysProductTypeChooseList = sysProductTypeChooseList;
         }
 
-        public Object getSysProductTypeParentChooseList() {
+        public List<SysProductTypeParentChooseListDTO> getSysProductTypeParentChooseList() {
             return sysProductTypeParentChooseList;
         }
 
-        public void setSysProductTypeParentChooseList(Object sysProductTypeParentChooseList) {
+        public void setSysProductTypeParentChooseList(List<SysProductTypeParentChooseListDTO> sysProductTypeParentChooseList) {
             this.sysProductTypeParentChooseList = sysProductTypeParentChooseList;
         }
 
@@ -452,243 +451,6 @@ public class SortReqDetailBean {
             }
         }
 
-        public static class OrderReceiveInVoListDTO {
-            private String receiveInId;
-            private String receiveId;
-            private String createTime;
-            private String receiveInNo;
-            private Object receiveNo;
-            private String deptId;
-            private String deptIdText;
-            private Object deptName;
-            private String categoryId;
-            private String productId;
-            private String productIdParentText;
-            private String productIdParentId;
-            private String productIdText;
-            private String sorter;
-            private String sorterText;
-            private String netWeight;
-            private String weight;
-            private String deductWeight;
-            private String receiveInStatus;
-            private String pieceFactor;
-            private String pieceAmount;
-            private Object remark;
-            private String stockAddressId;
-            private Object picIdStr;
-            private Object picUrlList;
-            private Object productList;
-
-            public String getReceiveInId() {
-                return receiveInId;
-            }
-
-            public void setReceiveInId(String receiveInId) {
-                this.receiveInId = receiveInId;
-            }
-
-            public String getReceiveId() {
-                return receiveId;
-            }
-
-            public void setReceiveId(String receiveId) {
-                this.receiveId = receiveId;
-            }
-
-            public String getCreateTime() {
-                return createTime;
-            }
-
-            public void setCreateTime(String createTime) {
-                this.createTime = createTime;
-            }
-
-            public String getReceiveInNo() {
-                return receiveInNo;
-            }
-
-            public void setReceiveInNo(String receiveInNo) {
-                this.receiveInNo = receiveInNo;
-            }
-
-            public Object getReceiveNo() {
-                return receiveNo;
-            }
-
-            public void setReceiveNo(Object receiveNo) {
-                this.receiveNo = receiveNo;
-            }
-
-            public String getDeptId() {
-                return deptId;
-            }
-
-            public void setDeptId(String deptId) {
-                this.deptId = deptId;
-            }
-
-            public String getDeptIdText() {
-                return deptIdText;
-            }
-
-            public void setDeptIdText(String deptIdText) {
-                this.deptIdText = deptIdText;
-            }
-
-            public Object getDeptName() {
-                return deptName;
-            }
-
-            public void setDeptName(Object deptName) {
-                this.deptName = deptName;
-            }
-
-            public String getCategoryId() {
-                return categoryId;
-            }
-
-            public void setCategoryId(String categoryId) {
-                this.categoryId = categoryId;
-            }
-
-            public String getProductId() {
-                return productId;
-            }
-
-            public void setProductId(String productId) {
-                this.productId = productId;
-            }
-
-            public String getProductIdParentText() {
-                return productIdParentText;
-            }
-
-            public void setProductIdParentText(String productIdParentText) {
-                this.productIdParentText = productIdParentText;
-            }
-
-            public String getProductIdParentId() {
-                return productIdParentId;
-            }
-
-            public void setProductIdParentId(String productIdParentId) {
-                this.productIdParentId = productIdParentId;
-            }
-
-            public String getProductIdText() {
-                return productIdText;
-            }
-
-            public void setProductIdText(String productIdText) {
-                this.productIdText = productIdText;
-            }
-
-            public String getSorter() {
-                return sorter;
-            }
-
-            public void setSorter(String sorter) {
-                this.sorter = sorter;
-            }
-
-            public String getSorterText() {
-                return sorterText;
-            }
-
-            public void setSorterText(String sorterText) {
-                this.sorterText = sorterText;
-            }
-
-            public String getNetWeight() {
-                return netWeight;
-            }
-
-            public void setNetWeight(String netWeight) {
-                this.netWeight = netWeight;
-            }
-
-            public String getWeight() {
-                return weight;
-            }
-
-            public void setWeight(String weight) {
-                this.weight = weight;
-            }
-
-            public String getDeductWeight() {
-                return deductWeight;
-            }
-
-            public void setDeductWeight(String deductWeight) {
-                this.deductWeight = deductWeight;
-            }
-
-            public String getReceiveInStatus() {
-                return receiveInStatus;
-            }
-
-            public void setReceiveInStatus(String receiveInStatus) {
-                this.receiveInStatus = receiveInStatus;
-            }
-
-            public String getPieceFactor() {
-                return pieceFactor;
-            }
-
-            public void setPieceFactor(String pieceFactor) {
-                this.pieceFactor = pieceFactor;
-            }
-
-            public String getPieceAmount() {
-                return pieceAmount;
-            }
-
-            public void setPieceAmount(String pieceAmount) {
-                this.pieceAmount = pieceAmount;
-            }
-
-            public Object getRemark() {
-                return remark;
-            }
-
-            public void setRemark(Object remark) {
-                this.remark = remark;
-            }
-
-            public String getStockAddressId() {
-                return stockAddressId;
-            }
-
-            public void setStockAddressId(String stockAddressId) {
-                this.stockAddressId = stockAddressId;
-            }
-
-            public Object getPicIdStr() {
-                return picIdStr;
-            }
-
-            public void setPicIdStr(Object picIdStr) {
-                this.picIdStr = picIdStr;
-            }
-
-            public Object getPicUrlList() {
-                return picUrlList;
-            }
-
-            public void setPicUrlList(Object picUrlList) {
-                this.picUrlList = picUrlList;
-            }
-
-            public Object getProductList() {
-                return productList;
-            }
-
-            public void setProductList(Object productList) {
-                this.productList = productList;
-            }
-        }
-
         public static class SysUserListDTO {
             private String userId;
             private String userIdText;
@@ -752,6 +514,317 @@ public class SortReqDetailBean {
 
             public void setUserBusinessTypeList(Object userBusinessTypeList) {
                 this.userBusinessTypeList = userBusinessTypeList;
+            }
+        }
+
+        public static class SysProductTypeParentChooseListDTO {
+            private String productId;
+            private String productCode;
+            private String productTypeName;
+            private Integer parentId;
+            private Integer level;
+            private String status;
+            private Object remark;
+            private Object picIdStrList;
+            private String productOrder;
+            private Object commission;
+            private Object parentName;
+            private Object stockAddressId;
+            private Object stockAddressIdText;
+            private List<ChildrenDTO> children;
+            private Object productPicUrlList;
+            private Object picList;
+            private boolean isSelected;
+
+            public boolean isSelected() {
+                return isSelected;
+            }
+
+            public void setSelected(boolean selected) {
+                isSelected = selected;
+            }
+
+            public String getProductId() {
+                return productId;
+            }
+
+            public void setProductId(String productId) {
+                this.productId = productId;
+            }
+
+            public String getProductCode() {
+                return productCode;
+            }
+
+            public void setProductCode(String productCode) {
+                this.productCode = productCode;
+            }
+
+            public String getProductTypeName() {
+                return productTypeName;
+            }
+
+            public void setProductTypeName(String productTypeName) {
+                this.productTypeName = productTypeName;
+            }
+
+            public Integer getParentId() {
+                return parentId;
+            }
+
+            public void setParentId(Integer parentId) {
+                this.parentId = parentId;
+            }
+
+            public Integer getLevel() {
+                return level;
+            }
+
+            public void setLevel(Integer level) {
+                this.level = level;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public Object getRemark() {
+                return remark;
+            }
+
+            public void setRemark(Object remark) {
+                this.remark = remark;
+            }
+
+            public Object getPicIdStrList() {
+                return picIdStrList;
+            }
+
+            public void setPicIdStrList(Object picIdStrList) {
+                this.picIdStrList = picIdStrList;
+            }
+
+            public String getProductOrder() {
+                return productOrder;
+            }
+
+            public void setProductOrder(String productOrder) {
+                this.productOrder = productOrder;
+            }
+
+            public Object getCommission() {
+                return commission;
+            }
+
+            public void setCommission(Object commission) {
+                this.commission = commission;
+            }
+
+            public Object getParentName() {
+                return parentName;
+            }
+
+            public void setParentName(Object parentName) {
+                this.parentName = parentName;
+            }
+
+            public Object getStockAddressId() {
+                return stockAddressId;
+            }
+
+            public void setStockAddressId(Object stockAddressId) {
+                this.stockAddressId = stockAddressId;
+            }
+
+            public Object getStockAddressIdText() {
+                return stockAddressIdText;
+            }
+
+            public void setStockAddressIdText(Object stockAddressIdText) {
+                this.stockAddressIdText = stockAddressIdText;
+            }
+
+            public List<ChildrenDTO> getChildren() {
+                return children;
+            }
+
+            public void setChildren(List<ChildrenDTO> children) {
+                this.children = children;
+            }
+
+            public Object getProductPicUrlList() {
+                return productPicUrlList;
+            }
+
+            public void setProductPicUrlList(Object productPicUrlList) {
+                this.productPicUrlList = productPicUrlList;
+            }
+
+            public Object getPicList() {
+                return picList;
+            }
+
+            public void setPicList(Object picList) {
+                this.picList = picList;
+            }
+
+            public static class ChildrenDTO {
+                private String productId;
+                private String productCode;
+                private String productTypeName;
+                private String parentId;
+                private Integer level;
+                private String status;
+                private Object remark;
+                private Object picIdStrList;
+                private String productOrder;
+                private String commission;
+                private Object parentName;
+                private String stockAddressId;
+                private String stockAddressIdText;
+                private Object children;
+                private Object productPicUrlList;
+                private Object picList;
+                private boolean isSelected;
+
+                public boolean isSelected() {
+                    return isSelected;
+                }
+
+                public void setSelected(boolean selected) {
+                    isSelected = selected;
+                }
+                public String getProductId() {
+                    return productId;
+                }
+
+                public void setProductId(String productId) {
+                    this.productId = productId;
+                }
+
+                public String getProductCode() {
+                    return productCode;
+                }
+
+                public void setProductCode(String productCode) {
+                    this.productCode = productCode;
+                }
+
+                public String getProductTypeName() {
+                    return productTypeName;
+                }
+
+                public void setProductTypeName(String productTypeName) {
+                    this.productTypeName = productTypeName;
+                }
+
+                public String getParentId() {
+                    return parentId;
+                }
+
+                public void setParentId(String parentId) {
+                    this.parentId = parentId;
+                }
+
+                public Integer getLevel() {
+                    return level;
+                }
+
+                public void setLevel(Integer level) {
+                    this.level = level;
+                }
+
+                public String getStatus() {
+                    return status;
+                }
+
+                public void setStatus(String status) {
+                    this.status = status;
+                }
+
+                public Object getRemark() {
+                    return remark;
+                }
+
+                public void setRemark(Object remark) {
+                    this.remark = remark;
+                }
+
+                public Object getPicIdStrList() {
+                    return picIdStrList;
+                }
+
+                public void setPicIdStrList(Object picIdStrList) {
+                    this.picIdStrList = picIdStrList;
+                }
+
+                public String getProductOrder() {
+                    return productOrder;
+                }
+
+                public void setProductOrder(String productOrder) {
+                    this.productOrder = productOrder;
+                }
+
+                public String getCommission() {
+                    return commission;
+                }
+
+                public void setCommission(String commission) {
+                    this.commission = commission;
+                }
+
+                public Object getParentName() {
+                    return parentName;
+                }
+
+                public void setParentName(Object parentName) {
+                    this.parentName = parentName;
+                }
+
+                public String getStockAddressId() {
+                    return stockAddressId;
+                }
+
+                public void setStockAddressId(String stockAddressId) {
+                    this.stockAddressId = stockAddressId;
+                }
+
+                public String getStockAddressIdText() {
+                    return stockAddressIdText;
+                }
+
+                public void setStockAddressIdText(String stockAddressIdText) {
+                    this.stockAddressIdText = stockAddressIdText;
+                }
+
+                public Object getChildren() {
+                    return children;
+                }
+
+                public void setChildren(Object children) {
+                    this.children = children;
+                }
+
+                public Object getProductPicUrlList() {
+                    return productPicUrlList;
+                }
+
+                public void setProductPicUrlList(Object productPicUrlList) {
+                    this.productPicUrlList = productPicUrlList;
+                }
+
+                public Object getPicList() {
+                    return picList;
+                }
+
+                public void setPicList(Object picList) {
+                    this.picList = picList;
+                }
             }
         }
     }

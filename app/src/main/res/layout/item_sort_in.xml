@@ -31,7 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="xxxxxxx站点"
             android:textColor="@color/textGrayColor"
             android:textSize="14sp" />
 
@@ -62,7 +61,6 @@
             android:id="@+id/tv_sn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="XXX"
             android:layout_marginLeft="10dp"
             android:textSize="14sp"
             />
@@ -89,7 +87,6 @@
                 android:id="@+id/tv_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
                 android:layout_marginLeft="10dp"
                 android:textSize="12sp"
                 />
@@ -110,7 +107,6 @@
                 android:id="@+id/tv_lingyong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
                 android:layout_marginLeft="10dp"
                 android:textSize="12sp"
                 />
@@ -131,7 +127,6 @@
                 android:id="@+id/tv_fenjian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
                 android:layout_marginLeft="10dp"
                 android:textSize="12sp"
                 />
@@ -168,27 +163,6 @@
                 />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:visibility="invisible"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="分拣量"
-                android:textSize="12sp"
-                />
-            <TextView
-                android:id="@+id/tv_sort"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XXX"
-                android:layout_marginLeft="10dp"
-                android:textSize="12sp"
-                />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"

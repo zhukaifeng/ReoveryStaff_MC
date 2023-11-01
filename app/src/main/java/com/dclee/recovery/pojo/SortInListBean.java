@@ -67,8 +67,8 @@ public class SortInListBean {
         private String stockAddressIdText;
         private String stockAddressName;
         private String receiveWeight;
-        private Object intoStorehouseWeight;
-        private Object differenceWeight;
+        private String intoStorehouseWeight;
+        private String differenceWeight;
         private String orderId;
         private List<?> productList;
         private String receiveStatus;
@@ -274,19 +274,19 @@ public class SortInListBean {
             this.receiveWeight = receiveWeight;
         }
 
-        public Object getIntoStorehouseWeight() {
+        public String getIntoStorehouseWeight() {
             return intoStorehouseWeight;
         }
 
-        public void setIntoStorehouseWeight(Object intoStorehouseWeight) {
+        public void setIntoStorehouseWeight(String intoStorehouseWeight) {
             this.intoStorehouseWeight = intoStorehouseWeight;
         }
 
-        public Object getDifferenceWeight() {
+        public String getDifferenceWeight() {
             return differenceWeight;
         }
 
-        public void setDifferenceWeight(Object differenceWeight) {
+        public void setDifferenceWeight(String differenceWeight) {
             this.differenceWeight = differenceWeight;
         }
 
