@@ -39,12 +39,14 @@
             android:textSize="16sp"
             />
 
-        <Spinner
-            android:id="@+id/spinner_order"
+        <TextView
+            android:id="@+id/tv_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="30dp"
             android:spinnerMode="dropdown"
+            android:gravity="center"
+            android:textSize="14sp"
             android:theme="@style/customer_spinner_style"
             android:background="@drawable/shape_spinnner_normal"
             />
