@@ -1,8 +1,14 @@
 package com.dclee.recovery.view.sorting;
 
+import static com.dclee.recovery.util.HexUtils.hexStringToString;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -26,6 +32,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.calypso.bluelib.bean.MessageBean;
+import com.calypso.bluelib.bean.SearchResult;
+import com.calypso.bluelib.listener.OnConnectListener;
+import com.calypso.bluelib.listener.OnReceiveMessageListener;
+import com.calypso.bluelib.listener.OnSearchDeviceListener;
+import com.calypso.bluelib.listener.OnSendMessageListener;
+import com.calypso.bluelib.manage.BlueManager;
+import com.calypso.bluelib.utils.TypeConversion;
 import com.dclee.recovery.R;
 import com.dclee.recovery.base.BaseActivity;
 import com.dclee.recovery.base.BaseAdapter;
@@ -37,17 +51,21 @@ import com.dclee.recovery.pojo.SortDefaultBean;
 import com.dclee.recovery.pojo.SortInListBean;
 import com.dclee.recovery.pojo.SortReqDetailBean;
 import com.dclee.recovery.util.FastJsonTools;
+import com.dclee.recovery.util.PreferencesUtils;
 import com.dclee.recovery.util.RequestUtil;
+import com.dclee.recovery.util.T;
 import com.dclee.recovery.view.purchase.SortRequestBean;
 import com.lzy.imagepicker.ImagePicker;
 import com.sunmi.utils.DoubleUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.ex.DbException;
 import org.xutils.http.RequestParams;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +98,15 @@ public class AddSortInActivity extends BaseActivity {
     private int index = 0;
     private SortDefaultBean.DataDTO.SysUserListDTO mOperateBean;
     private DbHelper dbHelper = new DbHelper();
+    private Context mContext;
+    private String mBlueMac;
+    private BlueManager bluemanage;
+
+    private List<SearchResult> mDevices;
+    private OnConnectListener onConnectListener;
+    private OnSendMessageListener onSendMessageListener;
+    private OnSearchDeviceListener onSearchDeviceListener;
+    private OnReceiveMessageListener onReceiveMessageListener;
 
     public AddSortInActivity() throws DbException {
     }
@@ -99,6 +126,9 @@ public class AddSortInActivity extends BaseActivity {
         tv_type = findViewById(R.id.tv_type);
         edt_buckle = findViewById(R.id.edt_buckle);
         tv_select_person = findViewById(R.id.tv_select_person);
+        mContext = this;
+        stringBuilder = new StringBuilder();
+        mDevices = new ArrayList<>();
 
         selectedImgRecycler = findViewById(R.id.selected_img_recycler);
 
@@ -422,6 +452,13 @@ public class AddSortInActivity extends BaseActivity {
     @Override
     public void initData() {
         getDataDetail();
+        mBlueMac = PreferencesUtils.getString(getActivity(), "blue_mac", "");
+        if (TextUtils.isEmpty(mBlueMac)) {
+            T.showShort(mContext, "请先选择蓝牙设备");
+            //startActionWithFinish(DeviceActivity.class);
+        } else {
+            initBlueManager();
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -465,5 +502,234 @@ public class AddSortInActivity extends BaseActivity {
         typeImageAdapter.onActivityResult(requestCode, resultCode, data);
     }
 
+    private StringBuilder stringBuilder;
+    private int mParmTag;
+    private String mWeightData;
+    private double mWeightValue;
 
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String message = msg.obj.toString();
+            switch (msg.what) {
+                case 0:
+                    T.showShort(mContext, message);
+                    //tvOrderWeight.setText(message);
+                    break;
+
+                case 3:
+                    //e("接收完成！");
+                    stringBuilder.delete(0, stringBuilder.length());
+                    stringBuilder.append(message);
+                    getWeightParm(hexStringToString(stringBuilder.toString()));
+                    break;
+            }
+        }
+    };
+
+    private void getWeightParm(String data) {
+        if (TextUtils.isEmpty(data))
+            return;
+        data = data.replaceAll("\n", "e").replaceAll("\r", "e");
+        if (mParmTag < 3) {
+            mParmTag++;
+            mWeightData = mWeightData + data;
+        } else {
+            mWeightData = mWeightData.substring(mWeightData.indexOf("ee") + 4, mWeightData.indexOf("ee") + 13);
+            //这里是重量
+            Log.e("mWeightData：" , mWeightData);
+            if (mWeightData.contains("kg")) {
+                try {
+                    mWeightData = mWeightData.substring(0, mWeightData.length() - 2);
+                    mWeightValue = Double.valueOf(mWeightData);
+                    tv_weight.setText(doubleToString(mWeightValue));
+                    edt_weight.setText(doubleToString(mWeightValue));
+                } catch (Exception e) {
+                    Log.e("getWeightParm error " , e.getMessage());
+                    tv_weight.setText("0.0");
+                }
+
+            }
+            //tvOrderWeight.setText(mWeightData);
+            mParmTag = 0;
+            mWeightData = "";
+        }
+    }
+
+    private String doubleToString(double num) {
+        //使用0.00不足位补0，#.##仅保留有效位
+        return new DecimalFormat("0.00").format(num);
+    }
+
+    /**
+     * 初始化蓝牙管理，设置监听
+     */
+    public void initBlueManager() {
+        onSearchDeviceListener = new OnSearchDeviceListener() {
+            @Override
+            public void onStartDiscovery() {
+                e("onStartDiscovery()");
+            }
+
+            @Override
+            public void onNewDeviceFound(BluetoothDevice device) {
+                e("new device: " + device.getName() + " " + device.getAddress());
+            }
+
+            @Override
+            public void onSearchCompleted(List<SearchResult> bondedList, List<SearchResult> newList) {
+                e("bondedList " + bondedList.toString());
+                e("newList " + newList.toString());
+                mDevices.clear();
+                mDevices.addAll(bondedList);
+                mDevices.addAll(newList);
+                e("搜索完成");
+            }
+
+            @Override
+            public void onError(Exception e) {
+                e("搜索失败");
+            }
+        };
+        onConnectListener = new OnConnectListener() {
+            @Override
+            public void onConnectStart() {
+                //开始连接
+                e("onConnectStart");
+                sendMessage(0, "开始连接");
+            }
+
+            @Override
+            public void onConnectting() {
+                //正在连接..;
+                e("onConnectting");
+                sendMessage(0, "正在连接");
+            }
+
+            @Override
+            public void onConnectFailed() {
+                //连接失败
+                e("onConnectFailed");
+                sendMessage(0, "连接失败");
+            }
+
+            @Override
+            public void onConectSuccess(String mac) {
+                //连接成功 MAC
+                e("onConectSuccess");
+                sendMessage(0, "连接成功");
+                bluemanage.setReadVersion(false);
+                stringBuilder.delete(0, stringBuilder.length());
+                MessageBean item = new MessageBean(TypeConversion.startDetect());
+                bluemanage.sendMessage(item, true);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                //连接异常！;
+                e("onError" + e.getMessage());
+                sendMessage(0, "连接异常");
+            }
+        };
+        onSendMessageListener = new OnSendMessageListener() {
+            @Override
+            public void onSuccess(int status, String response) {
+                //发送成功！
+                e("send message is success ! ");
+            }
+
+            @Override
+            public void onConnectionLost(Exception e) {
+                //连接断开！
+                e("send message is onConnectionLost ! ");
+            }
+
+            @Override
+            public void onError(Exception e) {
+                //发送失败！
+                e("send message is onError ! ");
+            }
+        };
+
+        onReceiveMessageListener = new OnReceiveMessageListener() {
+            @Override
+            public void onProgressUpdate(String what, int progress) {
+
+            }
+
+            @Override
+            public void onDetectDataUpdate(String what) {
+                sendMessage(3, what);
+            }
+
+            @Override
+            public void onDetectDataFinish() {
+                e("receive message is onDetectDataFinish");
+            }
+
+            @Override
+            public void onNewLine(String s) {
+                sendMessage(3, s);
+            }
+
+            @Override
+            public void onConnectionLost(Exception e) {
+                e("receive message is onConnectionLost ! ");
+            }
+
+            @Override
+            public void onError(Exception e) {
+                e("receive message is onError ! ");
+            }
+        };
+        bluemanage = BlueManager.getInstance(getApplicationContext());
+        bluemanage.setOnSearchDeviceListener(onSearchDeviceListener);
+        bluemanage.setOnConnectListener(onConnectListener);
+        bluemanage.setOnSendMessageListener(onSendMessageListener);
+        bluemanage.setOnReceiveMessageListener(onReceiveMessageListener);
+        bluemanage.requestEnableBt();
+        bluemanage.setReadVersion(false);
+        //bluemanage.searchDevices();
+        bluemanage.connectDevice(mBlueMac);
+    }
+
+    private void e(String msg) {
+        Log.e("CreateOrderActivity", msg);
+    }
+
+    /**
+     * @param type    0 修改状态  1 更新进度  2 体检完成  3 体检数据进度
+     * @param context
+     */
+    public void sendMessage(int type, String context) {
+        if (handler != null) {
+            Message message = handler.obtainMessage();
+            message.what = type;
+            message.obj = context;
+            handler.sendMessage(message);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        e("stop service");
+        if (bluemanage != null) {
+            bluemanage.close();
+            bluemanage = null;
+        }
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
+        }
+
+        if (bluemanage != null) {
+            bluemanage.stopScan();
+            bluemanage.closeDevice();
+            bluemanage.close();
+        }
+
+    }
 }
