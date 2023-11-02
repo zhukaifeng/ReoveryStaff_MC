@@ -168,20 +168,23 @@ public class SortInDetailActivity extends BaseActivity {
     }
     private void initList() {
         mDataList.clear();
-        mDataList.addAll(dbHelper.dbFindSortInBeanById(receiveId));
+        if (null != dbHelper.dbFindSortInBeanById(receiveId)){
+            mDataList.addAll(dbHelper.dbFindSortInBeanById(receiveId));
+            if (null != mData && null != mData.getData().getReceiveWeight()){
+                double allNetWeight =0;
+                for (SortInBean sortInBean:mDataList){
+                    double weight = Double.parseDouble(sortInBean.getWeight().toString());
+                    double buckle = Double.parseDouble(sortInBean.getDeductWeight().toString());
+                    double netweight = DoubleUtils.sub(weight, buckle);
+                    allNetWeight = netweight + allNetWeight;
+                }
+                double showWeight = DoubleUtils.sub(Double.parseDouble(mData.getData().getReceiveWeight()), allNetWeight);
+                tv_diff.setText(String.valueOf(showWeight));
+            }
+        }
         mAdapter.setDatas(mDataList);
 
-        if (null != mData && null != mData.getData().getReceiveWeight()){
-            double allNetWeight =0;
-            for (SortInBean sortInBean:mDataList){
-                double weight = Double.parseDouble(sortInBean.getWeight().toString());
-                double buckle = Double.parseDouble(sortInBean.getDeductWeight().toString());
-                double netweight = DoubleUtils.sub(weight, buckle);
-                allNetWeight = netweight + allNetWeight;
-            }
-            double showWeight = DoubleUtils.sub(Double.parseDouble(mData.getData().getReceiveWeight()), allNetWeight);
-            tv_diff.setText(String.valueOf(showWeight));
-        }
+
 
 
 

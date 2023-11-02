@@ -29,7 +29,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
 
+        aaptOptions.cruncherEnabled = false
+        aaptOptions.useNewCruncher = false
+
+    }
     signingConfigs {
         debug {
             keyAlias 'key0'
