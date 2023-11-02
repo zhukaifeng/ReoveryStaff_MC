@@ -65,13 +65,15 @@
                     android:text="员工"
                     android:textSize="16sp" />
 
-                <Spinner
-                    android:id="@+id/spinner_operate"
+                <TextView
+                    android:id="@+id/tv_select_person"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
                     android:background="@drawable/shape_spinnner_normal"
-                    android:spinnerMode="dropdown"
+                    android:text="点击选择"
+                    android:textSize="14sp"
+                    android:gravity="center"
                     android:theme="@style/customer_spinner_style" />
             </LinearLayout>
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -60,15 +62,16 @@ public class AddSortInActivity extends BaseActivity {
     private TextView tv_netweight;
     private EditText edt_weight;
     private TextView tv_type;
-    private Spinner spinner_operate;
+    private TextView tv_select_person;
     private TextView tv_weight;
     private EditText edt_buckle;
     private RequestUtil mRequestUtil;
     private String receiveId;
-    private ArrayAdapter<String> adapterForSpinnerPerson;
-    private List<String> listForPersonSpinner = new ArrayList<>();
+//    private ArrayAdapter<String> adapterForSpinnerPerson;
+//    private List<String> listForPersonSpinner = new ArrayList<>();
     private SortDefaultBean mSortDefaultBean;
     private PopupWindow pop;
+    private PopupWindow pop_person;
     private int mCurrentSelectIndex = 0;
     private SortDefaultBean.DataDTO.SysProductTypeParentChooseListDTO.ChildrenDTO mSelectType;
     private RecyclerView selectedImgRecycler;
@@ -95,6 +98,8 @@ public class AddSortInActivity extends BaseActivity {
         edt_weight = findViewById(R.id.edt_weight);
         tv_type = findViewById(R.id.tv_type);
         edt_buckle = findViewById(R.id.edt_buckle);
+        tv_select_person = findViewById(R.id.tv_select_person);
+
         selectedImgRecycler = findViewById(R.id.selected_img_recycler);
 
         selectedImgRecycler.setLayoutManager(new GridLayoutManager(this, 2));
@@ -152,8 +157,12 @@ public class AddSortInActivity extends BaseActivity {
 
             }
         });
-        listForPersonSpinner.add("请选择");
-        spinner_operate = findViewById(R.id.spinner_operate);
+        tv_select_person.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPerson();
+            }
+        });
         tv_weight = findViewById(R.id.tv_weight);
         mRequestUtil = new RequestUtil(this);
         receiveId = getIntent().getStringExtra("id");
@@ -165,23 +174,7 @@ public class AddSortInActivity extends BaseActivity {
             }
         });
 
-        adapterForSpinnerPerson = new ArrayAdapter<>(AddSortInActivity.this, R.layout.item_for_custom_spinner, listForPersonSpinner);
-        spinner_operate.setAdapter(adapterForSpinnerPerson);
-        spinner_operate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    mOperateBean = null;
-                } else {
-                    mOperateBean = mSortDefaultBean.getData().getSysUserList().get(position - 1);
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         tv_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,7 +220,8 @@ public class AddSortInActivity extends BaseActivity {
             public void onClick(View v) {
                 tv_weight.setText("");
                 mOperateBean = null;
-                spinner_operate.setSelection(0);
+                tv_select_person.setText("点击选择");
+                tv_type.setText("点击选择");
                 mPics.clear();
                 index = 0;
                 mSelectType = null;
@@ -302,18 +296,67 @@ public class AddSortInActivity extends BaseActivity {
             }
         });
     }
+    private void showSelectPerson() {
+        View contentView = LayoutInflater.from(AddSortInActivity.this).inflate(R.layout.popup_select_person, null);
+        if (null != pop_person) {
+            if (pop_person.isShowing()) {
+                return;
+            }
+            pop_person.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+        } else {
+            pop_person = new PopupWindow(this);
+            final RecyclerView rv_category = contentView.findViewById(R.id.rv_person);
+            LinearLayout linear_content = contentView.findViewById(R.id.linear_content);
+            PopupPersonAdapter personAdapter = new PopupPersonAdapter(this);
+            rv_category.setLayoutManager(new GridLayoutManager(this,3));
+            rv_category.setAdapter(personAdapter);
+            if (mSortDefaultBean.getData().getSysProductTypeParentChooseList().size() > 0) {
+                mSortDefaultBean.getData().getSysProductTypeParentChooseList().get(0).setSelected(true);
+            }
+            personAdapter.setDatas(mSortDefaultBean.getData().getSysUserList());
+
+
+
+            personAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    mOperateBean = mSortDefaultBean.getData().getSysUserList().get(position);
+                    tv_select_person.setText(mOperateBean.getUserIdText());
+                    pop_person.dismiss();
+                }
+            });
+            linear_content.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pop_person.dismiss();
+                }
+            });
+            pop_person.setOutsideTouchable(false);
+            pop_person.setTouchable(true);
+            pop_person.setContentView(contentView);
+            DisplayMetrics dm = new DisplayMetrics();//屏幕度量
+            getWindowManager().getDefaultDisplay().getMetrics(dm);
+            int screen_width = dm.widthPixels;//宽度
+            int screen_height = dm.heightPixels ;//高度
+            pop_person.setWidth(screen_width);
+            pop_person.setHeight(screen_height);
+            pop_person.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+
+        }
+    }
 
     private void showSelect() {
+        View contentView = LayoutInflater.from(AddSortInActivity.this).inflate(R.layout.popup_select, null);
         if (null != pop) {
             if (pop.isShowing()) {
                 return;
             }
-            pop.showAsDropDown(tv_type);
+            pop.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
         } else {
             pop = new PopupWindow(this);
-            View contentView = LayoutInflater.from(AddSortInActivity.this).inflate(R.layout.popup_select, null);
             final RecyclerView rv_category = contentView.findViewById(R.id.rv_category);
             final RecyclerView rv_type = contentView.findViewById(R.id.rv_type);
+            LinearLayout linear_content = contentView.findViewById(R.id.linear_content);
             PopupCategoryAdapter categoryAdapter = new PopupCategoryAdapter(this);
             rv_category.setLayoutManager(new LinearLayoutManager(this));
             rv_category.setAdapter(categoryAdapter);
@@ -356,12 +399,23 @@ public class AddSortInActivity extends BaseActivity {
                     pop.dismiss();
                 }
             });
+            linear_content.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pop.dismiss();
+                }
+            });
             pop.setOutsideTouchable(false);
             pop.setTouchable(true);
             pop.setContentView(contentView);
-            pop.setWidth(tv_type.getWidth());
-            pop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-            pop.showAsDropDown(tv_type);
+            DisplayMetrics dm = new DisplayMetrics();//屏幕度量
+            getWindowManager().getDefaultDisplay().getMetrics(dm);
+            int screen_width = dm.widthPixels;//宽度
+            int screen_height = dm.heightPixels ;//高度
+            pop.setWidth(screen_width);
+            pop.setHeight(screen_height);
+            pop.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+
         }
     }
 
@@ -386,10 +440,7 @@ public class AddSortInActivity extends BaseActivity {
                                 Log.d("zkf", "result:" + result);
                                 mSortDefaultBean = FastJsonTools.get(result, SortDefaultBean.class);
 
-                                for (SortDefaultBean.DataDTO.SysUserListDTO beanData : mSortDefaultBean.getData().getSysUserList()) {
-                                    listForPersonSpinner.add(beanData.getUserIdText());
-                                }
-                                adapterForSpinnerPerson.notifyDataSetChanged();
+
 
                             }
 

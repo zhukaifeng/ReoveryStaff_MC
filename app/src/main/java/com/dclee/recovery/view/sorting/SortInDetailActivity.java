@@ -262,6 +262,7 @@ public class SortInDetailActivity extends BaseActivity {
 
     }
 
+    @SuppressLint("CheckResult")
     private void submitData() {
         double showWeight = Double.parseDouble(tv_diff.getText().toString());
         if (showWeight>150||showWeight< -150){
