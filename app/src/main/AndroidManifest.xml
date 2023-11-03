@@ -30,7 +30,7 @@
     <application
         android:name=".MyApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_meicheng"
+        android:icon="@mipmap/ic_jdt"
         android:label="@string/application_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
