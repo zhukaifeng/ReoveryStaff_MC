@@ -278,7 +278,6 @@ public class HomeFrag extends BaseFragment {
 
     @Override
     protected void initData() {
-        Log.d("zkf",CacheUtil.getAccessToken());
         if (TextUtils.isEmpty(CacheUtil.getAccessToken())) {
             toClass(mActivity, LoginActivity.class);
             getActivity().finish();
