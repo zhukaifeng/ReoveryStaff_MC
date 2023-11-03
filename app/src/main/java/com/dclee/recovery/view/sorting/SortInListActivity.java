@@ -68,6 +68,9 @@ public class SortInListActivity extends BaseActivity {
                 }
                 Intent intent = new Intent(getActivity(), SortInDetailActivity.class);
                 intent.putExtra("id",mAdapter.getDatas().get(position).getReceiveId());
+                if (!TextUtils.isEmpty(mAdapter.getDatas().get(position).getOrderNo())){
+                    intent.putExtra("snNum",mAdapter.getDatas().get(position).getOrderNo());
+                }
                 startActivity(intent);
             }
         });
@@ -121,6 +124,8 @@ public class SortInListActivity extends BaseActivity {
                             public void onRequestSuccess(String result) {
                                 mData = FastJsonTools.get(result, SortInListBean.class);
                                 mAdapter.setDatas(mData.getRows());
+                                mRecyclerView.setRefreshComplete();
+                                mRecyclerView.setLoadMoreComplete();
                             }
 
                             @Override

@@ -45,14 +45,16 @@ public class SortInDetailActivity extends BaseActivity {
     private SortInDetailAdapter mAdapter;
     private TitleBar titleBar;
     private TextView tv_site;
-    private TextView tv_customer;
+    //private TextView tv_customer;
     private TextView tv_type;
+    private TextView tv_sn;
     private TextView tv_count;
     private TextView tv_date;
     private TextView tv_sort;
     private TextView tv_diff;
     private TextView tv_add;
     private TextView tv_submit;
+    private TextView tv_no_data;
     private RequestUtil mRequestUtil;
     private String receiveId;
     private DbHelper dbHelper = new DbHelper();
@@ -73,13 +75,14 @@ public class SortInDetailActivity extends BaseActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         titleBar = findViewById(R.id.titleBar);
         tv_site = findViewById(R.id.tv_site);
-        tv_customer = findViewById(R.id.tv_customer);
+        tv_sn = findViewById(R.id.tv_sn);
         tv_type = findViewById(R.id.tv_type);
         tv_count = findViewById(R.id.tv_count);
         tv_date = findViewById(R.id.tv_date);
         tv_sort = findViewById(R.id.tv_sort);
         tv_diff = findViewById(R.id.tv_diff);
         tv_add = findViewById(R.id.tv_add);
+        tv_no_data = findViewById(R.id.tv_no_data);
         tv_submit = findViewById(R.id.tv_submit);
         mAdapter = new SortInDetailAdapter(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -152,6 +155,11 @@ public class SortInDetailActivity extends BaseActivity {
                 submitData();
             }
         });
+
+        String sn = getIntent().getStringExtra("snNum");
+        if (!TextUtils.isEmpty(sn)){
+            tv_sn.setText(sn);
+        }
     }
 
     @Override
@@ -169,6 +177,8 @@ public class SortInDetailActivity extends BaseActivity {
     private void initList() {
         mDataList.clear();
         if (null != dbHelper.dbFindSortInBeanById(receiveId)){
+            tv_no_data.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
             mDataList.addAll(dbHelper.dbFindSortInBeanById(receiveId));
             if (null != mData && null != mData.getData().getReceiveWeight()){
                 double allNetWeight =0;
@@ -184,6 +194,10 @@ public class SortInDetailActivity extends BaseActivity {
         }
         mAdapter.setDatas(mDataList);
 
+        if (mDataList.size()==0){
+            tv_no_data.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
 
 
 
@@ -215,9 +229,9 @@ public class SortInDetailActivity extends BaseActivity {
                                 if (!TextUtils.isEmpty(mData.getData().getDeptIdText())) {
                                     tv_site.setText(mData.getData().getDeptIdText());
                                 }
-                                if (!TextUtils.isEmpty(mData.getData().getCustomerName())) {
-                                    tv_customer.setText(mData.getData().getCustomerName());
-                                }
+//                                if (!TextUtils.isEmpty(mData.getData().getSn())) {
+//                                    tv_customer.setText(mData.getData().getCustomerName());
+//                                }
                                 if (!TextUtils.isEmpty(mData.getData().getCategoryIdText())) {
                                     tv_type.setText(mData.getData().getCategoryIdText());
                                 }
@@ -226,7 +240,7 @@ public class SortInDetailActivity extends BaseActivity {
                                     tv_count.setText(mData.getData().getReceiveWeight());
                                 }
                                 if (!TextUtils.isEmpty(mData.getData().getCreateTime())) {
-                                    tv_date.setText(mData.getData().getCreateTime().substring(0, 10));
+                                    tv_date.setText(mData.getData().getCreateTime());
                                 }
                                 if (!TextUtils.isEmpty(mData.getData().getIntoStorehouseWeight())) {
                                     tv_sort.setText(mData.getData().getIntoStorehouseWeight());

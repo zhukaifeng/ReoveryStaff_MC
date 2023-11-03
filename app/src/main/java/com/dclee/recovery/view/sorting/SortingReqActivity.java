@@ -75,12 +75,14 @@ public class SortingReqActivity extends BaseActivity {
         mRecyclerView.setPullToRefreshListener(new PullToRefreshListener() {
             @Override
             public void onRefresh() {
+                Log.d("zkf","refresh");
                 pageNum = 0;
                 getData();
             }
 
             @Override
             public void onLoadMore() {
+                Log.d("zkf","onLoadMore");
                 pageSize++;
                 getData();
             }
@@ -129,6 +131,8 @@ public class SortingReqActivity extends BaseActivity {
                             public void onRequestSuccess(String result) {
                                 SortInListBean  data = FastJsonTools.get(result, SortInListBean.class);
                                 mAdapter.setDatas(data.getRows());
+                                mRecyclerView.setRefreshComplete();
+                                mRecyclerView.setLoadMoreComplete();
                             }
 
                             @Override
