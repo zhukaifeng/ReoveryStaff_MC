@@ -135,6 +135,9 @@
         <activity
             android:name=".view.sorting.AddSortInActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.sorting.CreateSortInActivity"
+            android:screenOrientation="portrait" />
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

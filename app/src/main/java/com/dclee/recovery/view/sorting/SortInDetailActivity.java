@@ -143,7 +143,7 @@ public class SortInDetailActivity extends BaseActivity {
         tv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SortInDetailActivity.this, AddSortInActivity.class);
+                Intent intent = new Intent(SortInDetailActivity.this, CreateSortInActivity.class);
                 intent.putExtra("id", receiveId);
                 startActivity(intent);
             }

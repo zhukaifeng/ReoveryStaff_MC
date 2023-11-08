@@ -48,12 +48,15 @@
         <entry key="app/src/main/res/drawable/bg_grey4.xml" value="0.1445" />
         <entry key="app/src/main/res/drawable/bg_red.xml" value="0.1445" />
         <entry key="app/src/main/res/drawable/bg_red2.xml" value="0.1445" />
+        <entry key="app/src/main/res/drawable/bg_round_gray.xml" value="0.1234375" />
         <entry key="app/src/main/res/drawable/bg_shape_app.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/bg_shape_func.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/bg_shape_home_top.xml" value="0.134" />
         <entry key="app/src/main/res/drawable/bg_white.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/item_selector.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/shape_round_normal.xml" value="0.1234375" />
         <entry key="app/src/main/res/drawable/shape_spinnner_normal.xml" value="0.20625" />
+        <entry key="app/src/main/res/drawable/white_round10_bg.xml" value="0.1234375" />
         <entry key="app/src/main/res/layout/activity_add_sortin.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_sorting_req.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_check.xml" value="0.25" />
@@ -62,6 +65,8 @@
         <entry key="app/src/main/res/layout/activity_check_time.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_clean_data.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_company.xml" value="0.11614583333333334" />
+        <entry key="app/src/main/res/layout/activity_create_order.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_create_sortin.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_dev_connect.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_device.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_down_order.xml" value="0.33" />
