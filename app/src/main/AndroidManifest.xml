@@ -138,6 +138,12 @@
         <activity
             android:name=".view.sorting.CreateSortInActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.sorting.ImageShowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.sorting.SummaryActivity"
+            android:screenOrientation="portrait" />
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

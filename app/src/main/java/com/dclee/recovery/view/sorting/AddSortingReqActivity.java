@@ -72,7 +72,7 @@ public class AddSortingReqActivity extends BaseActivity {
     private TextView tv_product;
     private TextView tv_position;
     private TextView tv_inventory;
-    private Spinner spinner_type;
+    private TextView tv_type;
     private TextView tv_save;
     private CheckBox cb_yes;
     private CheckBox cb_no;
@@ -118,7 +118,7 @@ public class AddSortingReqActivity extends BaseActivity {
         tv_product = findViewById(R.id.tv_product);
         tv_position = findViewById(R.id.tv_position);
         tv_inventory = findViewById(R.id.tv_inventory);
-        spinner_type = findViewById(R.id.spinner_type);
+        tv_type = findViewById(R.id.tv_type);
         tv_save = findViewById(R.id.tv_save);
         receiveId = getIntent().getStringExtra("id");
         mRequestUtil = new RequestUtil(this);
@@ -131,7 +131,7 @@ public class AddSortingReqActivity extends BaseActivity {
         tv_department.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCreateMode == 0){
+                if (mCreateMode == 0) {
                     showSelectDepart();
                 }
             }
@@ -139,13 +139,13 @@ public class AddSortingReqActivity extends BaseActivity {
         tv_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCreateMode == 0){
-                    if (mSelectDepart ==null){
+                if (mCreateMode == 0) {
+                    if (mSelectDepart == null) {
                         Toast.makeText(AddSortingReqActivity.this, "请先选择部门", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
-                if (mCreateMode == 0 && null != mSelectDepart){
+                if (mCreateMode == 0 && null != mSelectDepart) {
                     showSelectCategory();
                 }
             }
@@ -153,17 +153,17 @@ public class AddSortingReqActivity extends BaseActivity {
         tv_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCreateMode == 0){
-                    if (mSelectDepart ==null){
+                if (mCreateMode == 0) {
+                    if (mSelectDepart == null) {
                         Toast.makeText(AddSortingReqActivity.this, "请先选择部门", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (mSelectDeptInfoData ==null){
+                    if (mSelectDeptInfoData == null) {
                         Toast.makeText(AddSortingReqActivity.this, "请先选择类别", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
-                if (mCreateMode == 0 && null != mSelectDepart && null != mSelectDeptInfoData){
+                if (mCreateMode == 0 && null != mSelectDepart && null != mSelectDeptInfoData) {
                     showSelectProduct();
                 }
             }
@@ -177,24 +177,23 @@ public class AddSortingReqActivity extends BaseActivity {
         selectedImgRecycler.setAdapter(typeImageAdapter);
 
 
-
         listForSpinnerType.add("请选择领用类型");
         listForSpinnerType.add("库存领用");
         listForSpinnerType.add("来货分拣");
         adapterForSpinnerType = new ArrayAdapter<>(AddSortingReqActivity.this, R.layout.item_for_custom_spinner, listForSpinnerType);
-        spinner_type.setAdapter(adapterForSpinnerType);
-        spinner_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                type = position;
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        spinner_type.setAdapter(adapterForSpinnerType);
+//        spinner_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                type = position;
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
         cb_yes.setChecked(true);
         selectType = 1;
         cb_yes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -223,21 +222,21 @@ public class AddSortingReqActivity extends BaseActivity {
             public void onClick(View v) {
 
 
-                if (mCreateMode == 0){
+                if (mCreateMode == 0) {
 
-                    if (mSelectDepart == null){
+                    if (mSelectDepart == null) {
                         Toast.makeText(AddSortingReqActivity.this, "请选择部门", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (mSelectDeptInfoData == null){
+                    if (mSelectDeptInfoData == null) {
                         Toast.makeText(AddSortingReqActivity.this, "请选择类别", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (mSelectProductData == null){
+                    if (mSelectProductData == null) {
                         Toast.makeText(AddSortingReqActivity.this, "请选择品名", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (TextUtils.isEmpty(tv_count.getText().toString())){
+                    if (TextUtils.isEmpty(tv_count.getText().toString())) {
                         Toast.makeText(AddSortingReqActivity.this, "请填写领用数量", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -250,14 +249,14 @@ public class AddSortingReqActivity extends BaseActivity {
                         return;
                     }
                     if (Integer.parseInt(tv_count.getText().toString()) >
-                            Integer.parseInt(tv_inventory.getText().toString())){
+                            Integer.parseInt(tv_inventory.getText().toString())) {
                         Toast.makeText(AddSortingReqActivity.this, "领用数量不能大于库存", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     createOrder2();
 
-                }else {
+                } else {
                     if (mData == null) {
                         Toast.makeText(AddSortingReqActivity.this, "请选择订单", Toast.LENGTH_SHORT).show();
                         return;
@@ -279,21 +278,22 @@ public class AddSortingReqActivity extends BaseActivity {
                 }
 
 
-
             }
         });
+        tv_type.setText("库存分拣");
+        type = 1;
     }
 
 
-
     private PopupSelectProductAdapter proAdapter;
+
     private void showSelectProduct() {
         View contentView = LayoutInflater.from(AddSortingReqActivity.this).inflate(R.layout.popup_select_depart, null);
         if (null != pop_product) {
             if (pop_product.isShowing()) {
                 return;
             }
-            if (null != mSelectDeptInfoData){
+            if (null != mSelectDeptInfoData) {
                 proAdapter.setDatas(mSelectDeptInfoData.getChildren());
                 proAdapter.notifyDataSetChanged();
             }
@@ -307,7 +307,6 @@ public class AddSortingReqActivity extends BaseActivity {
             rv_category.setAdapter(proAdapter);
 
             proAdapter.setDatas(mSelectDeptInfoData.getChildren());
-
 
 
             proAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
@@ -332,7 +331,7 @@ public class AddSortingReqActivity extends BaseActivity {
             DisplayMetrics dm = new DisplayMetrics();//屏幕度量
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             int screen_width = dm.widthPixels;//宽度
-            int screen_height = dm.heightPixels ;//高度
+            int screen_height = dm.heightPixels;//高度
             pop_product.setWidth(screen_width);
             pop_product.setHeight(screen_height);
             pop_product.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
@@ -341,7 +340,8 @@ public class AddSortingReqActivity extends BaseActivity {
 
 
     }
-   private PopupSelectCategoryAdapter catAdapter;
+
+    private PopupSelectCategoryAdapter catAdapter;
 
     private void showSelectCategory() {
         View contentView = LayoutInflater.from(AddSortingReqActivity.this).inflate(R.layout.popup_select_depart, null);
@@ -349,7 +349,7 @@ public class AddSortingReqActivity extends BaseActivity {
             if (pop_category.isShowing()) {
                 return;
             }
-            if (null != mDeptInfoBean){
+            if (null != mDeptInfoBean) {
                 catAdapter.setDatas(mDeptInfoBean.getData());
                 catAdapter.notifyDataSetChanged();
             }
@@ -366,13 +366,12 @@ public class AddSortingReqActivity extends BaseActivity {
             catAdapter.setDatas(mDeptInfoBean.getData());
 
 
-
             catAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     mSelectDeptInfoData = mDeptInfoBean.getData().get(position);
                     tv_category.setText(mSelectDeptInfoData.getCategoryName());
-                    Log.d("zkf","ssss:" + mSelectDeptInfoData.getCategoryName());
+                    Log.d("zkf", "ssss:" + mSelectDeptInfoData.getCategoryName());
 
                     mSelectProductData = null;
                     tv_product.setText("");
@@ -394,7 +393,7 @@ public class AddSortingReqActivity extends BaseActivity {
             DisplayMetrics dm = new DisplayMetrics();//屏幕度量
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             int screen_width = dm.widthPixels;//宽度
-            int screen_height = dm.heightPixels ;//高度
+            int screen_height = dm.heightPixels;//高度
             pop_category.setWidth(screen_width);
             pop_category.setHeight(screen_height);
             pop_category.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
@@ -403,7 +402,9 @@ public class AddSortingReqActivity extends BaseActivity {
 
 
     }
+
     private PopupDepartAdapter departAdapter;
+
     private void showSelectDepart() {
         View contentView = LayoutInflater.from(AddSortingReqActivity.this).inflate(R.layout.popup_select_depart, null);
         if (null != pop_depart) {
@@ -420,7 +421,6 @@ public class AddSortingReqActivity extends BaseActivity {
             rv_category.setAdapter(departAdapter);
 
             departAdapter.setDatas(mDepartDataList);
-
 
 
             departAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
@@ -452,7 +452,7 @@ public class AddSortingReqActivity extends BaseActivity {
             DisplayMetrics dm = new DisplayMetrics();//屏幕度量
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             int screen_width = dm.widthPixels;//宽度
-            int screen_height = dm.heightPixels ;//高度
+            int screen_height = dm.heightPixels;//高度
             pop_depart.setWidth(screen_width);
             pop_depart.setHeight(screen_height);
             pop_depart.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
@@ -476,7 +476,7 @@ public class AddSortingReqActivity extends BaseActivity {
                             @Override
                             public void onRequestSuccess(String result) {
                                 Log.d("zkf", "result222:" + result);
-                                if (result.contains("操作成功")){
+                                if (result.contains("操作成功")) {
                                     mDeptInfoBean = FastJsonTools.get(result, DeptInfoBean.class);
                                 }
                                 loadingDialog.close();
@@ -490,7 +490,6 @@ public class AddSortingReqActivity extends BaseActivity {
                         });
                     }
                 });
-
 
 
     }
@@ -514,7 +513,6 @@ public class AddSortingReqActivity extends BaseActivity {
             snAdapter.setDatas(orderData);
 
 
-
             snAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
@@ -526,6 +524,8 @@ public class AddSortingReqActivity extends BaseActivity {
                     tv_position.setText(orderData.get(position).getStockAddressName());
                     tv_inventory.setText(String.valueOf(orderData.get(position).getStock()));
                     tv_count.setText(orderData.get(position).getNetWeight());
+                    tv_type.setText("来货分拣");
+                    type = 2;
                     mCreateMode = 1;
                     tv_count.setEnabled(false);
                     pop_no.dismiss();
@@ -543,7 +543,7 @@ public class AddSortingReqActivity extends BaseActivity {
             DisplayMetrics dm = new DisplayMetrics();//屏幕度量
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             int screen_width = dm.widthPixels;//宽度
-            int screen_height = dm.heightPixels ;//高度
+            int screen_height = dm.heightPixels;//高度
             pop_no.setWidth(screen_width);
             pop_no.setHeight(screen_height);
             pop_no.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
@@ -619,6 +619,7 @@ public class AddSortingReqActivity extends BaseActivity {
             }
         });
     }
+
     @SuppressLint("CheckResult")
     private void createOrder2() {
         new RxPermissions(this).request(Manifest.permission.INTERNET)
@@ -638,7 +639,6 @@ public class AddSortingReqActivity extends BaseActivity {
                         requestParams.addParameter("receiveWeight", tv_count.getText().toString());
 
 
-
                         final LoadingDialog loadingDialog = new LoadingDialog(AddSortingReqActivity.this)
                                 .setLoadingText("保存中...");
                         mRequestUtil.doPostWithToken2("mobile/orderReceive/addOrderReceive", requestParams, SortInListBean.class, new RequestUtil.OnRequestFinishListener<String>() {
@@ -647,13 +647,13 @@ public class AddSortingReqActivity extends BaseActivity {
                             @Override
                             public void onRequestSuccess(String result) {
                                 loadingDialog.close();
-                                if (result.contains("操作成功")){
+                                if (result.contains("操作成功")) {
                                     Toast.makeText(AddSortingReqActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                                     finish();
-                                }else {
+                                } else {
                                     ErrorMsgBean msgBean = FastJsonTools.get(result, ErrorMsgBean.class);
                                     String errorMsg = msgBean.getMsg();
-                                    if (TextUtils.isEmpty(errorMsg)){
+                                    if (TextUtils.isEmpty(errorMsg)) {
                                         errorMsg = "保存失败";
                                     }
                                     Toast.makeText(AddSortingReqActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
@@ -668,6 +668,7 @@ public class AddSortingReqActivity extends BaseActivity {
                     }
                 });
     }
+
     @SuppressLint("CheckResult")
     private void createOrder() {
 
@@ -693,13 +694,13 @@ public class AddSortingReqActivity extends BaseActivity {
                             @Override
                             public void onRequestSuccess(String result) {
                                 loadingDialog.close();
-                                if (result.contains("操作成功")){
+                                if (result.contains("操作成功")) {
                                     Toast.makeText(AddSortingReqActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                                     finish();
-                                }else {
+                                } else {
                                     ErrorMsgBean msgBean = FastJsonTools.get(result, ErrorMsgBean.class);
                                     String errorMsg = msgBean.getMsg();
-                                    if (TextUtils.isEmpty(errorMsg)){
+                                    if (TextUtils.isEmpty(errorMsg)) {
                                         errorMsg = "保存失败";
                                     }
                                     Toast.makeText(AddSortingReqActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
@@ -729,6 +730,7 @@ public class AddSortingReqActivity extends BaseActivity {
                         mRequestUtil.doGet("mobile/order/listWithAdd", requestParams, new RequestUtil.OnRequestFinishListener<String>() {
                             @Override
                             public void onRequestSuccess(String result) {
+                                Log.d("zkf", "result222:" + result);
                                 mOrders = FastJsonTools.get(result, OrderCreateBean.class);
                                 orderData.addAll(mOrders.getData());
                             }
@@ -752,7 +754,7 @@ public class AddSortingReqActivity extends BaseActivity {
                         mRequestUtil.doGet("mobile/orderReceive/selectDeptList", requestParams, new RequestUtil.OnRequestFinishListener<String>() {
                             @Override
                             public void onRequestSuccess(String result) {
-                                Log.d("zkf","result 111:" + result);
+                                Log.d("zkf", "result 111:" + result);
                                 DepartBean data = FastJsonTools.get(result, DepartBean.class);
                                 mDepartDataList.addAll(data.getData());
 //                                orderData.addAll(mOrders.getData());

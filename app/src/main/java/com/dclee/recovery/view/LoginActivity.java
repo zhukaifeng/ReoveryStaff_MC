@@ -125,6 +125,7 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void onRequestSuccess(LoginResult result) {
                                     CacheUtil.login(result);
+                                    Log.d("zkf","result:" + result.toString());
                                     startActivity(new Intent(getActivity(), HomeActivity.class));
                                     finish();
                                 }

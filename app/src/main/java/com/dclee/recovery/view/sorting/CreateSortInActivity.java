@@ -111,6 +111,8 @@ import java.util.List;
 import java.util.Locale;
 
 import io.reactivex.functions.Consumer;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 public class CreateSortInActivity extends BaseActivity {
     private RequestUtil requestUtil;
@@ -133,7 +135,7 @@ public class CreateSortInActivity extends BaseActivity {
     private RecyclerView rvProduct;
     private TextView tv_getkg;
 
-    private double mWeightValue;
+    //    private double mWeightValue;
     private String mWeightData;
     private int mParmTag;
     private BlueManager bluemanage;
@@ -154,17 +156,17 @@ public class CreateSortInActivity extends BaseActivity {
     private ProductAdapter mProductAdapter;
     private List<OrderProd> mProducts = new ArrayList<>();
 
-     private TextView tv_back;
+    private TextView tv_back;
     private TextView tv_add_continue;
     private TextView tv_add;
     private TextView tv_netweight;
     private EditText edt_weight;
     private TextView tv_type;
     private TextView tv_select_person;
-//    private TextView tv_weight;
+    //    private TextView tv_weight;
     private EditText edt_buckle;
     private String receiveId;
-//    private ArrayAdapter<String> adapterForSpinnerPerson;
+    //    private ArrayAdapter<String> adapterForSpinnerPerson;
 //    private List<String> listForPersonSpinner = new ArrayList<>();
     private SortDefaultBean mSortDefaultBean;
     private PopupWindow pop;
@@ -281,9 +283,9 @@ public class CreateSortInActivity extends BaseActivity {
                     }
                     if (tv_weight.isEnabled()) {
                         if (TextUtils.isEmpty(charSequence.toString())) {
-                            mWeightValue = 0;
+                            //  mWeightValue = 0;
                         } else {
-                            mWeightValue = Double.parseDouble(charSequence.toString());
+//                            mWeightValue = Double.parseDouble(charSequence.toString());
                         }
                         setProdWeight();
                     } else {
@@ -361,7 +363,6 @@ public class CreateSortInActivity extends BaseActivity {
         }).start();
 
 
-
         tv_back = findViewById(R.id.tv_back);
         tv_add_continue = findViewById(R.id.tv_add_continue);
         tv_add = findViewById(R.id.tv_add);
@@ -376,7 +377,7 @@ public class CreateSortInActivity extends BaseActivity {
 
         selectedImgRecycler = findViewById(R.id.selected_img_recycler);
 
-        selectedImgRecycler.setLayoutManager(new GridLayoutManager(this, 2));
+        selectedImgRecycler.setLayoutManager(new GridLayoutManager(this, 3));
         typeImageAdapter = new TypeImageAdapter(this, mRequestUtil);
         // typeImageAdapter.setUploadedImages(receiveParam.getImages());
         selectedImgRecycler.setAdapter(typeImageAdapter);
@@ -395,12 +396,12 @@ public class CreateSortInActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(edt_weight.getText().toString()) &&
                         !TextUtils.isEmpty(edt_buckle.getText().toString())) {
-                    double weight = Double.parseDouble(edt_weight.getText().toString());
-                    double buckle = Double.parseDouble(edt_buckle.getText().toString());
+                    int weight = Integer.parseInt(edt_weight.getText().toString());
+                    int buckle = Integer.parseInt(edt_buckle.getText().toString());
 //                    if (weight<buckle){
 //                        Toast.
 //                    }
-                    double netweight = DoubleUtils.sub(weight, buckle);
+                    int netweight =weight - buckle;
                     tv_netweight.setText(String.valueOf(netweight));
                 }
             }
@@ -419,13 +420,13 @@ public class CreateSortInActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(edt_weight.getText().toString())
-                        &&!TextUtils.isEmpty(edt_buckle.getText().toString())){
-                    double weight = Double.parseDouble(edt_weight.getText().toString());
-                    double buckle = Double.parseDouble(edt_buckle.getText().toString());
+                        && !TextUtils.isEmpty(edt_buckle.getText().toString())) {
+                    int weight = Integer.parseInt(edt_weight.getText().toString());
+                    int buckle = Integer.parseInt(edt_buckle.getText().toString());
 //                    if (weight<buckle){
 //                        Toast.
 //                    }
-                    double netweight = DoubleUtils.sub(weight, buckle);
+                    int netweight =weight - buckle;
                     tv_netweight.setText(String.valueOf(netweight));
                 }
 
@@ -483,6 +484,18 @@ public class CreateSortInActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 edt_weight.setText(tv_weight.getText().toString());
+            }
+        });
+
+        typeImageAdapter.setOnImageClickListener(new TypeImageAdapter.OnImageClickListener() {
+            @Override
+            public void onImageClick(boolean isAddImage, String image) {
+                if (!isAddImage){
+                    Intent intent = new Intent(CreateSortInActivity.this,ImageShowActivity.class);
+                    intent.putExtra("picUrl",image);
+                    startActivity(intent);
+                }
+
             }
         });
     }
@@ -739,11 +752,12 @@ public class CreateSortInActivity extends BaseActivity {
             if (mWeightData.contains("kg")) {
                 try {
                     mWeightData = mWeightData.substring(0, mWeightData.length() - 2);
-                    mWeightValue = Double.valueOf(mWeightData);
-                    tv_weight.setText(doubleToString(mWeightValue));
+                    double mWeight = Double.valueOf(mWeightData);
+                    int weightInteger = new Double(mWeight).intValue();
+                    tv_weight.setText(String.valueOf(weightInteger));
                 } catch (Exception e) {
                     e("getWeightParm error " + e.getMessage());
-                    tv_weight.setText("0.0");
+                    tv_weight.setText("0");
                 }
 
             }
@@ -1329,7 +1343,7 @@ public class CreateSortInActivity extends BaseActivity {
     private void submitData() {
 
         if (typeImageAdapter.getUploadedImages().size() > 0) {
-            uploadFile();
+            compressFile();
         } else {
             createOrder();
         }
@@ -1344,13 +1358,14 @@ public class CreateSortInActivity extends BaseActivity {
                 mPics.clear();
                 index = 0;
                 mSelectType = null;
-                mCurrentSelectIndex =0;
+                mCurrentSelectIndex = 0;
                 tv_type.setText("");
                 edt_weight.setText("");
                 edt_buckle.setText("");
                 tv_netweight.setText("");
                 List<String> tmp = new ArrayList<>();
                 typeImageAdapter.setUploadedImages(tmp);
+                compressFile.clear();
             }
         });
 
@@ -1375,17 +1390,33 @@ public class CreateSortInActivity extends BaseActivity {
         sortInBean.setProductName(mSelectType.getProductTypeName());
         sortInBean.setSorterName(mOperateBean.getUserIdText());
         boolean success = dbHelper.addSortInBean(sortInBean);
-        if (success){
-            Toast.makeText(CreateSortInActivity.this,"保存成功",Toast.LENGTH_SHORT).show();
+        if (success) {
+            Toast.makeText(CreateSortInActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+            tv_weight.setText("");
+            mOperateBean = null;
+            tv_select_person.setText("点击选择");
+            tv_type.setText("点击选择");
+            mPics.clear();
+            index = 0;
+            mSelectType = null;
+            mCurrentSelectIndex = 0;
+            tv_type.setText("");
+            edt_weight.setText("");
+            edt_buckle.setText("");
+            tv_netweight.setText("");
+            List<String> tmp = new ArrayList<>();
+            typeImageAdapter.setUploadedImages(tmp);
         }
     }
 
     private void uploadFile() {
         Log.d("zkf", "index:" + index);
-        File file = new File(typeImageAdapter.getUploadedImages().get(index));
+        File file = compressFile.get(index);
+        Log.d("zkf", "size:" + file.length());
         RequestParams requestParams = new RequestParams();
         requestParams.setMultipart(true);
         requestParams.addBodyParameter("file", file);
+
         final LoadingDialog loadingDialog = new LoadingDialog(CreateSortInActivity.this)
                 .setLoadingText("图片上传中请稍后...");
         loadingDialog.show();
@@ -1415,6 +1446,40 @@ public class CreateSortInActivity extends BaseActivity {
             }
         });
     }
+
+    private List<File> compressFile = new ArrayList<>();
+    private void compressFile() {
+
+        for (String s:typeImageAdapter.getUploadedImages()){
+            File originalFile = new File(s);
+            Luban.with(getActivity())
+                    .load(originalFile)
+                    .ignoreBy(10)
+                    .setCompressListener(new OnCompressListener() {
+                        @Override
+                        public void onStart() {
+                            // 压缩开始时的回调
+                        }
+
+                        @Override
+                        public void onSuccess(File compressedFile) {
+                            // 压缩成功后的回调，返回压缩后的图片文件
+                            compressFile.add(compressedFile);
+                            if (compressFile.size() == typeImageAdapter.getUploadedImages().size()){
+                                uploadFile();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            // 压缩失败时的回调
+                        }
+                    }).launch();
+
+        }
+
+    }
+
     private void showSelectPerson() {
         View contentView = LayoutInflater.from(CreateSortInActivity.this).inflate(R.layout.popup_select_person, null);
         if (null != pop_person) {
@@ -1427,13 +1492,12 @@ public class CreateSortInActivity extends BaseActivity {
             final RecyclerView rv_category = contentView.findViewById(R.id.rv_person);
             LinearLayout linear_content = contentView.findViewById(R.id.linear_content);
             PopupPersonAdapter personAdapter = new PopupPersonAdapter(this);
-            rv_category.setLayoutManager(new GridLayoutManager(this,3));
+            rv_category.setLayoutManager(new GridLayoutManager(this, 3));
             rv_category.setAdapter(personAdapter);
             if (mSortDefaultBean.getData().getSysProductTypeParentChooseList().size() > 0) {
                 mSortDefaultBean.getData().getSysProductTypeParentChooseList().get(0).setSelected(true);
             }
             personAdapter.setDatas(mSortDefaultBean.getData().getSysUserList());
-
 
 
             personAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
@@ -1456,7 +1520,7 @@ public class CreateSortInActivity extends BaseActivity {
             DisplayMetrics dm = new DisplayMetrics();//屏幕度量
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             int screen_width = dm.widthPixels;//宽度
-            int screen_height = dm.heightPixels ;//高度
+            int screen_height = dm.heightPixels;//高度
             pop_person.setWidth(screen_width);
             pop_person.setHeight(screen_height);
             pop_person.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
@@ -1530,7 +1594,7 @@ public class CreateSortInActivity extends BaseActivity {
             DisplayMetrics dm = new DisplayMetrics();//屏幕度量
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             int screen_width = dm.widthPixels;//宽度
-            int screen_height = dm.heightPixels ;//高度
+            int screen_height = dm.heightPixels;//高度
             pop.setWidth(screen_width);
             pop.setHeight(screen_height);
             pop.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
@@ -1555,7 +1619,6 @@ public class CreateSortInActivity extends BaseActivity {
                                 mSortDefaultBean = FastJsonTools.get(result, SortDefaultBean.class);
 
 
-
                             }
 
                             @Override
@@ -1567,7 +1630,6 @@ public class CreateSortInActivity extends BaseActivity {
                 });
 
     }
-
 
 
 }

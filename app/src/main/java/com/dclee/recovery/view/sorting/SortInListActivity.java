@@ -123,7 +123,15 @@ public class SortInListActivity extends BaseActivity {
                             @Override
                             public void onRequestSuccess(String result) {
                                 mData = FastJsonTools.get(result, SortInListBean.class);
-                                mAdapter.setDatas(mData.getRows());
+                                List<SortInListBean.RowsBean> tmp = new ArrayList<>();
+                                tmp.addAll(mData.getRows());
+                                List<SortInListBean.RowsBean> addList = new ArrayList<>();
+                                for (SortInListBean.RowsBean rowsBean:tmp){
+                                    if (rowsBean.getReceiveStatus().equals("4")){
+                                        addList.add(rowsBean);
+                                    }
+                                }
+                                mAdapter.setDatas(addList);
                                 mRecyclerView.setRefreshComplete();
                                 mRecyclerView.setLoadMoreComplete();
                             }

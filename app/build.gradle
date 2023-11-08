@@ -59,7 +59,7 @@ android {
     //打包
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "meicheng_v${defaultConfig.versionName}.apk"
+            outputFileName = "jiadatong_v${defaultConfig.versionName}.apk"
         }
     }
 
@@ -113,4 +113,6 @@ dependencies {
     api 'com.umeng.umsdk:push:6.5.5'
 
     implementation files('libs/BaiduLBS_Android.jar')
+    implementation 'top.zibin:Luban:1.1.8'
+
 }

@@ -64,7 +64,7 @@ public class RequestUtil {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(activity, "未知错误");
+                       // ToastUtil.showToast(activity, "未知错误");
                         listener.onRequestFail(500, "未知错误");
                     }
                 });
@@ -127,7 +127,7 @@ public class RequestUtil {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(activity, "未知错误");
+                      //  ToastUtil.showToast(activity, "未知错误");
                         listener.onRequestFail(500, "未知错误");
                     }
                 });
@@ -189,7 +189,7 @@ public class RequestUtil {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(activity, "未知错误");
+                       // ToastUtil.showToast(activity, "未知错误");
                         listener.onRequestFail(500, "未知错误");
                     }
                 });
@@ -250,7 +250,7 @@ public class RequestUtil {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(activity, "未知错误");
+                        //ToastUtil.showToast(activity, "未知错误");
                         listener.onRequestFail(500, "未知错误");
                     }
                 });
@@ -304,7 +304,7 @@ public class RequestUtil {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(activity, "未知错误");
+                      //  ToastUtil.showToast(activity, "未知错误");
                         listener.onRequestFail(500, "未知错误");
                     }
                 });
@@ -360,7 +360,8 @@ public class RequestUtil {
         requestParams.addHeader("Authorization", "Bearer" + " " + CacheUtil.getAccessToken());
         requestParams.addHeader("content-type","application/json; charset=UTF-8");
         requestParams.setUri(activity.getResources().getString(R.string.base_url) + url);
-        requestParams.setConnectTimeout(60*1000);
+        requestParams.setConnectTimeout(3*60*1000);
+        requestParams.setReadTimeout(3*60*1000);
         Log.e("requestParams222", requestParams.toString());
 //        Log.e("requestParams", token);
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
@@ -389,7 +390,7 @@ public class RequestUtil {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(activity, "未知错误");
+                      //  ToastUtil.showToast(activity, "未知错误");
                         listener.onRequestFail(500, "未知错误");
                     }
                 });
@@ -444,7 +445,7 @@ public class RequestUtil {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(activity, "未知错误");
+                     //   ToastUtil.showToast(activity, "未知错误");
                         listener.onRequestFail(500, "未知错误");
                     }
                 });

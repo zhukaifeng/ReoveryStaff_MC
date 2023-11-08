@@ -35,6 +35,7 @@ import com.dclee.recovery.view.orderlist.OrderAdminListActivity;
 import com.dclee.recovery.view.orderlist.OrderListActivity;
 import com.dclee.recovery.view.sorting.SortInListActivity;
 import com.dclee.recovery.view.sorting.SortingReqActivity;
+import com.dclee.recovery.view.sorting.SummaryActivity;
 import com.google.gson.JsonObject;
 import com.longsh.optionframelibrary.OptionMaterialDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -67,6 +68,7 @@ public class HomeFrag extends BaseFragment {
 
     private LinearLayout ll_sort_req;
     private LinearLayout ll_sort_in;
+    private ImageView iv_pic;
 
 
     private final int REQ_SCANE_CODE = 0x200;
@@ -243,7 +245,8 @@ public class HomeFrag extends BaseFragment {
         llCheckOrderAct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toCheckOrderAct();
+//                toCheckOrderAct();
+                startActivity(new Intent(getActivity(), SummaryActivity.class));
             }
         });
 
@@ -273,6 +276,10 @@ public class HomeFrag extends BaseFragment {
         llDeviceAct = view.findViewById(R.id.ll_deviceAct);
         ll_sort_req = view.findViewById(R.id.ll_sort_req);
         ll_sort_in = view.findViewById(R.id.ll_sort_in);
+        iv_pic = view.findViewById(R.id.iv_pic);
+
+        Glide.with(getContext()).load(R.drawable.home_page).fitCenter().into(iv_pic);
+
         mUserName.setText(CacheUtil.getDeptName());
     }
 
