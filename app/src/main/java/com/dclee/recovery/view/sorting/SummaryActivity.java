@@ -129,7 +129,7 @@ public class SummaryActivity extends BaseActivity {
                                 long end = dateEnd.getTime();
                                 if (start>end){
                                     Toast.makeText(SummaryActivity.this,"开始日期不能大于结束日期",Toast.LENGTH_SHORT).show();
-                                    tv_start_time.setText("");
+                                    tv_start_time.setText("选择开始日期");
                                 }else {
                                     getData();
                                 }
@@ -167,7 +167,7 @@ public class SummaryActivity extends BaseActivity {
                                 long end = dateEnd.getTime();
                                 if (start>end){
                                     Toast.makeText(SummaryActivity.this,"开始日期不能大于结束日期",Toast.LENGTH_SHORT).show();
-                                    tv_end_time.setText("");
+                                    tv_end_time.setText("选择结束日期");
                                 }else {
                                     getData();
                                 }

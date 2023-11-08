@@ -1383,6 +1383,8 @@ public class CreateSortInActivity extends BaseActivity {
             }
             String value = stringBuffer.toString().substring(0, stringBuffer.toString().length() - 1);
             sortInBean.setPicIdStr(value);
+            Log.d("zkf","value:" + value);
+
         }
         sortInBean.setReceiveId(receiveId);
         sortInBean.setProductId(mSelectType.getProductId());

@@ -19,6 +19,7 @@ import com.dclee.recovery.base.BaseActivity;
 import com.dclee.recovery.base.BaseAdapter;
 import com.dclee.recovery.base.DbHelper;
 import com.dclee.recovery.bean.db.SortInBean;
+import com.dclee.recovery.pojo.ErrorMsgBean;
 import com.dclee.recovery.pojo.OrderBean;
 import com.dclee.recovery.pojo.SortInListBean;
 import com.dclee.recovery.pojo.SortReqDetailBean;
@@ -60,6 +61,7 @@ public class SortInDetailActivity extends BaseActivity {
     private DbHelper dbHelper = new DbHelper();
     private List<SortInBean> mDataList = new ArrayList<>();
     private SortReqDetailBean mData;
+
     public SortInDetailActivity() throws DbException {
     }
 
@@ -107,13 +109,13 @@ public class SortInDetailActivity extends BaseActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                boolean success =dbHelper.dbDeleteId(mDataList.get(position).getId(),receiveId);
-                                if (success){
+                                boolean success = dbHelper.dbDeleteId(mDataList.get(position).getId(), receiveId);
+                                if (success) {
                                     mDataList.remove(position);
                                     mAdapter.notifyDataSetChanged();
-                                    if (null != mData && null != mData.getData().getReceiveWeight()){
-                                        double allNetWeight =0;
-                                        for (SortInBean sortInBean:mDataList){
+                                    if (null != mData && null != mData.getData().getReceiveWeight()) {
+                                        double allNetWeight = 0;
+                                        for (SortInBean sortInBean : mDataList) {
                                             double weight = Double.parseDouble(sortInBean.getWeight().toString());
                                             double buckle = Double.parseDouble(sortInBean.getDeductWeight().toString());
                                             double netweight = DoubleUtils.sub(weight, buckle);
@@ -157,7 +159,7 @@ public class SortInDetailActivity extends BaseActivity {
         });
 
         String sn = getIntent().getStringExtra("snNum");
-        if (!TextUtils.isEmpty(sn)){
+        if (!TextUtils.isEmpty(sn)) {
             tv_sn.setText(sn);
         }
     }
@@ -174,15 +176,16 @@ public class SortInDetailActivity extends BaseActivity {
         initList();
 
     }
+
     private void initList() {
         mDataList.clear();
-        if (null != dbHelper.dbFindSortInBeanById(receiveId)){
+        if (null != dbHelper.dbFindSortInBeanById(receiveId)) {
             tv_no_data.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
             mDataList.addAll(dbHelper.dbFindSortInBeanById(receiveId));
-            if (null != mData && null != mData.getData().getReceiveWeight()){
-                double allNetWeight =0;
-                for (SortInBean sortInBean:mDataList){
+            if (null != mData && null != mData.getData().getReceiveWeight()) {
+                double allNetWeight = 0;
+                for (SortInBean sortInBean : mDataList) {
                     double weight = Double.parseDouble(sortInBean.getWeight().toString());
                     double buckle = Double.parseDouble(sortInBean.getDeductWeight().toString());
                     double netweight = DoubleUtils.sub(weight, buckle);
@@ -194,12 +197,10 @@ public class SortInDetailActivity extends BaseActivity {
         }
         mAdapter.setDatas(mDataList);
 
-        if (mDataList.size()==0){
+        if (mDataList.size() == 0) {
             tv_no_data.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         }
-
-
 
 
     }
@@ -246,9 +247,9 @@ public class SortInDetailActivity extends BaseActivity {
                                     tv_sort.setText(mData.getData().getIntoStorehouseWeight());
                                 }
 
-                                if (null != mData && null != mData.getData().getReceiveWeight()){
-                                    double allNetWeight =0;
-                                    for (SortInBean sortInBean:mDataList){
+                                if (null != mData && null != mData.getData().getReceiveWeight()) {
+                                    double allNetWeight = 0;
+                                    for (SortInBean sortInBean : mDataList) {
                                         double weight = Double.parseDouble(sortInBean.getWeight().toString());
                                         double buckle = Double.parseDouble(sortInBean.getDeductWeight().toString());
                                         double netweight = DoubleUtils.sub(weight, buckle);
@@ -279,10 +280,13 @@ public class SortInDetailActivity extends BaseActivity {
     @SuppressLint("CheckResult")
     private void submitData() {
         double showWeight = Double.parseDouble(tv_diff.getText().toString());
-        if (showWeight>150||showWeight< -150){
-            Toast.makeText(SortInDetailActivity.this, "差异大于150", Toast.LENGTH_SHORT).show();
-            return;
+        if (!mData.getData().getRealTimeOutBound().equals("2")) {
+            if (showWeight > 150 || showWeight < -150) {
+                Toast.makeText(SortInDetailActivity.this, "差异大于150", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
+
 
         new RxPermissions(this).request(Manifest.permission.INTERNET)
                 .subscribe(new Consumer<Boolean>() {
@@ -300,11 +304,13 @@ public class SortInDetailActivity extends BaseActivity {
                             if (!TextUtils.isEmpty(sortInBean.getPicIdStr())) {
                                 sortRequestBean.setPicIdStr(sortInBean.getPicIdStr());
                             }
+                            Log.d("zkf", "pic ids:" + sortRequestBean.getPicIdStr());
+
                             list.add(sortRequestBean);
                         }
                         requestParams.addBodyParameter("orderReceiveInVoList", list);
                         requestParams.addBodyParameter("receiveId", receiveId);
-
+                        Log.d("zkf", "requestParams:" + requestParams.toString());
                         final LoadingDialog loadingDialog = new LoadingDialog(SortInDetailActivity.this)
                                 .setLoadingText("保存中...");
                         mRequestUtil.doPostWithToken2("/mobile/orderReceive/add", requestParams, SortInListBean.class, new RequestUtil.OnRequestFinishListener<String>() {
@@ -312,10 +318,17 @@ public class SortInDetailActivity extends BaseActivity {
                             @Override
                             public void onRequestSuccess(String result) {
                                 loadingDialog.close();
-                                if (result.contains("操作成功")){
+                                if (result.contains("操作成功")) {
                                     Toast.makeText(SortInDetailActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                                     finish();
                                     dbHelper.dbDeleteAll(receiveId);
+                                } else {
+                                    ErrorMsgBean msgBean = FastJsonTools.get(result, ErrorMsgBean.class);
+                                    String errorMsg = msgBean.getMsg();
+                                    if (TextUtils.isEmpty(errorMsg)) {
+                                        errorMsg = "保存失败";
+                                    }
+                                    Toast.makeText(SortInDetailActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
                                 }
 
                             }

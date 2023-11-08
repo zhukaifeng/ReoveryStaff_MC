@@ -1,8 +1,10 @@
 package com.dclee.recovery.view.sorting;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +43,15 @@ public class SummaryAdapter extends BaseAdapter<SummaryBean.RowsDTO> {
         TextView tv_category = itemView.findViewById(R.id.tv_category);
         TextView tv_count = itemView.findViewById(R.id.tv_count);
         TextView tv_pay = itemView.findViewById(R.id.tv_pay);
+        LinearLayout linear_line = itemView.findViewById(R.id.linear_line);
 
+
+        if ((position % 2) == 0){
+            linear_line.setBackgroundColor(Color.parseColor("#ffffff"));
+        }else {
+            linear_line.setBackgroundColor(Color.parseColor("#d3d3d3"));
+
+        }
 
         if (!TextUtils.isEmpty(data.getSorterText())) {
             tv_person.setText(data.getSorterText());
