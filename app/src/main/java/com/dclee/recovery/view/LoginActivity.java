@@ -58,8 +58,8 @@ public class LoginActivity extends BaseActivity {
         String msg1 = "已阅读并同意";
         String msg2 = "《禹洲美城骑手协议》";
         //zkfdebug
-        mAccount.setText("NX001");
-        mPassword.setText("123456");
+//        mAccount.setText("NX001");
+//        mPassword.setText("123456");
         cbPn.setChecked(true);
 
         SpannableString spannableString = new SpannableString(msg1 + msg2);
@@ -98,6 +98,14 @@ public class LoginActivity extends BaseActivity {
 
     @SuppressLint("CheckResult")
     public void doLogin() {
+        if (TextUtils.isEmpty(mAccount.getText().toString())){
+            T.showShort(mActivity, "请输入账号");
+            return;
+        }
+        if (TextUtils.isEmpty(mPassword.getText().toString())){
+            T.showShort(mActivity, "请输入密码");
+            return;
+        }
         if (!cbPn.isChecked()) {
             T.showShort(mActivity, "请先同意嘉达通蓝牙版骑手协议");
             return;
