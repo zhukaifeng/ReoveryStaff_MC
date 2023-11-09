@@ -293,10 +293,10 @@ public class SortInDetailActivity extends BaseActivity {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
                         RequestParams requestParams = new RequestParams();
-                        SortRequestBean sortRequestBean = new SortRequestBean();
 
                         List<SortRequestBean> list = new ArrayList<>();
                         for (SortInBean sortInBean : mDataList) {
+                            SortRequestBean sortRequestBean = new SortRequestBean();
                             sortRequestBean.setWeight(sortInBean.getWeight());
                             sortRequestBean.setDeductWeight(sortInBean.getDeductWeight());
                             sortRequestBean.setProductId(sortInBean.getProductId());
@@ -310,7 +310,7 @@ public class SortInDetailActivity extends BaseActivity {
                         }
                         requestParams.addBodyParameter("orderReceiveInVoList", list);
                         requestParams.addBodyParameter("receiveId", receiveId);
-                        Log.d("zkf", "requestParams:" + requestParams.toString());
+                        Log.d("zkf", "requestParams:" + requestParams.toJSONString());
                         final LoadingDialog loadingDialog = new LoadingDialog(SortInDetailActivity.this)
                                 .setLoadingText("保存中...");
                         mRequestUtil.doPostWithToken2("/mobile/orderReceive/add", requestParams, SortInListBean.class, new RequestUtil.OnRequestFinishListener<String>() {
